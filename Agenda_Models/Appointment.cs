@@ -47,5 +47,28 @@ namespace Agenda_Models
         [Required]
         [Display(Name = "Verwijderd")]
         public DateTime Deleted { get; set; } = DateTime.MaxValue;
+
+
+        public override string ToString()
+        {
+            return Id + "  Afspraak op " + From + " betreffende " + Title;
+        }
+
+
+        public static List<Appointment> SeedingData()
+        {
+            var list = new List<Appointment>();
+            list.AddRange(
+                // Voeg een default-appointment toe
+                new Appointment { Title = "-", Deleted = DateTime.Now },
+
+                // Voeg enkele test-appointments toe
+                new Appointment { Title = "Afspraak met Bob", From = DateTime.Now.AddDays(7), To = DateTime.Now.AddDays(7).AddHours(1) },
+                new Appointment { Title = "Lunch met Alice", From = DateTime.Now.AddDays(12), To = DateTime.Now.AddDays(12).AddHours(2) },
+                new Appointment { Title = "Projectbespreking", From = DateTime.Now.AddDays(15), To = DateTime.Now.AddDays(15).AddHours(3) }
+                );
+
+            return list;
+        }
     }
 }
