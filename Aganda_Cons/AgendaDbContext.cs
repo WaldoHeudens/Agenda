@@ -10,6 +10,7 @@ namespace Agenda_Cons
 {
     internal class AgendaDbContext: DbContext
     {
+        public DbSet<AppointmentType> AppointmentTypes { get; set; }
         public DbSet<Appointment> Appointments { get; set; } 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -22,6 +23,12 @@ namespace Agenda_Cons
 
         internal static void Seeder(AgendaDbContext context)
         {
+            if (!context.AppointmentTypes.Any())
+            {
+                context.AppointmentTypes.AddRange(AppointmentType.SeedingData());
+                context.SaveChanges();
+            }
+
             if (!context.Appointments.Any())
             {
                 context.Appointments.AddRange(Appointment.SeedingData());
