@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Agenda_Models
 {
@@ -51,6 +52,7 @@ namespace Agenda_Models
         // Foreign key naar AppointmentType:  Zorg voor de juiste één-op-veel relatie
         [Required]
         [Display(Name = "Type")]
+        [ForeignKey("AppointmentType")]
         public int AppointmentTypeId { get; set; } = AppointmentType.Dummy.Id; // Standaard naar de Dummy verwijzen
 
         // Navigatie-eigenschap

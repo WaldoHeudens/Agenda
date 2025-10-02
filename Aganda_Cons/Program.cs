@@ -19,17 +19,19 @@ using (var context = new AgendaDbContext())
     // Haal de appointments op die niet verwijderd zijn
     // Gebruik Where met een gedelegeerde functie
     var appointments = context.Appointments.Where(NotDeleted);
-    bool NotDeleted(Appointment a)
-    {
-        return a.Deleted > DateTime.Now;
-    }
+        bool NotDeleted(Appointment a)
+        {
+            return a.Deleted > DateTime.Now;
+        }
 
     // Doe exact hetzelfde met een anonieme delegate
     appointments = context.Appointments
                           .Where(delegate (Appointment a){return a.Deleted > DateTime.Now;});
 
     // Doe weer exact hetzelfde met een lambda-expressie
-    appointments = context.Appointments.Where(a => a.Deleted > DateTime.Now);
+    appointments = context.Appointments.Where(a => a.Deleted > DateTime.Now 
+                                                && a.From > DateTime.Now
+                                                && a.AppointmentType.Name != "Doctor");
 
     // Toon de gefilterde appointments
     Console.WriteLine("\nAlleen afspraken die niet verwijderd werden:");
@@ -42,7 +44,7 @@ using (var context = new AgendaDbContext())
     Appointment nieuweAfspraak = new Appointment() { Title = "Tandardsbezoek", 
                                                      Description = "Dat gaat pijn doen",
                                                      From = DateTime.Now.AddDays(7)};
-    context.Add(nieuweAfspraak);
+    context.Add(nieuweAfspraak);   // hetzelfde als context.Appointments.Add(nieuweAfspraak);
     context.SaveChanges();
     Console.WriteLine("\nEen afspraak werd toegevoegd:");
     foreach (var appointment in appointments)
@@ -58,7 +60,8 @@ using (var context = new AgendaDbContext())
         teWijzigen.Title = "Doktersbezoek";
         teWijzigen.Description = "Dat gaat minder pijn doen";
         teWijzigen.AppointmentType = context.AppointmentTypes.FirstOrDefault(at => at.Name == "Doctor");
-        context.Update(teWijzigen);
+        // teWijzigen.AppointmentTypeId = context.AppointmentTypes.FirstOrDefault(at => at.Name == "Doctor").Id;
+        context.Update(teWijzigen);  // hetzelfde als context.Appointments.Update(teWijzigen);
         context.SaveChanges();
 
         Console.WriteLine("\nEen afspraak werd toegevoegd:");

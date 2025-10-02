@@ -11,7 +11,8 @@ namespace Agenda_Models
     {
         // Dummy instantie voor referentie
         static public AppointmentType Dummy = null;
-        
+
+        // [Key]
         public int Id { get; set; }
 
         [Required]
