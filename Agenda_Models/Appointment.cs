@@ -48,6 +48,15 @@ namespace Agenda_Models
         [Display(Name = "Verwijderd")]
         public DateTime Deleted { get; set; } = DateTime.MaxValue;
 
+        // Foreign key naar AppointmentType:  Zorg voor de juiste één-op-veel relatie
+        [Required]
+        [Display(Name = "Type")]
+        public int AppointmentTypeId { get; set; } = AppointmentType.Dummy.Id; // Standaard naar de Dummy verwijzen
+
+        // Navigatie-eigenschap
+        public AppointmentType? AppointmentType { get; set; }
+
+
 
         public override string ToString()
         {

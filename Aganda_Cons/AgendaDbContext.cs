@@ -28,6 +28,7 @@ namespace Agenda_Cons
                 context.AppointmentTypes.AddRange(AppointmentType.SeedingData());
                 context.SaveChanges();
             }
+            AppointmentType.Dummy = context.AppointmentTypes.First(at => at.Name == "-");
 
             if (!context.Appointments.Any())
             {

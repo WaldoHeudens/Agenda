@@ -51,19 +51,22 @@ using (var context = new AgendaDbContext())
     }
 
     // Wijzigen van een afspraak
-    Appointment teWijzigen = appointments.FirstOrDefault(a => a.Title == "Tandardbezoek");
+    Appointment teWijzigen = appointments.FirstOrDefault(a => a.Title == "Tandardsbezoek");
     if (teWijzigen != null)
     {
         teWijzigen.From = DateTime.Now.AddDays(30);
         teWijzigen.Title = "Doktersbezoek";
         teWijzigen.Description = "Dat gaat minder pijn doen";
+        teWijzigen.AppointmentType = context.AppointmentTypes.FirstOrDefault(at => at.Name == "Doctor");
         context.Update(teWijzigen);
         context.SaveChanges();
 
         Console.WriteLine("\nEen afspraak werd toegevoegd:");
         foreach (var appointment in appointments)
         {
-            Console.WriteLine(appointment);
+            Console.Write(appointment);
+            Console.Write("  (");
+            Console.WriteLine(appointment.AppointmentType == null ? "-" : appointment.AppointmentType.Name + ")");
         }
     }
 
