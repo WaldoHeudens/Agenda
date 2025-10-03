@@ -31,7 +31,8 @@ using (var context = new AgendaDbContext())
     // Doe weer exact hetzelfde met een lambda-expressie
     appointments = context.Appointments.Where(a => a.Deleted > DateTime.Now 
                                                 && a.From > DateTime.Now
-                                                && a.AppointmentType.Name != "Doctor");
+                                                && a.AppointmentType.Name != "Doctor")
+                                        .OrderBy(a => a.Title);
 
     // Toon de gefilterde appointments
     Console.WriteLine("\nAlleen afspraken die niet verwijderd werden:");

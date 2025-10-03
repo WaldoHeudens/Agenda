@@ -1,14 +1,13 @@
-﻿using Agenda_Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Agenda_Cons
+namespace Agenda_Models
 {
-    internal class AgendaDbContext: DbContext
+    public class AgendaDbContext: DbContext
     {
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
         public DbSet<Appointment> Appointments { get; set; } 
@@ -21,7 +20,7 @@ namespace Agenda_Cons
             optionsBuilder.UseSqlServer(connectionString);
         }
 
-        internal static void Seeder(AgendaDbContext context)
+        public static void Seeder(AgendaDbContext context)
         {
             if (!context.AppointmentTypes.Any())
             {
