@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Agenda_WPF"
         mc:Ignorable="d"
         Title="Agenda" Height="600" Width="1200">
-    <Grid Margin="15,45,0,0">
-        <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single">
+    <StackPanel Margin="15,45,0,0" Orientation="Vertical">
+        <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single" SelectionChanged="dgAppointments_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Wanneer" Binding="{Binding From}" Width="150"/>
                 <DataGridTextColumn Header="Tot" Binding="{Binding To}" Width="150"/>
@@ -17,5 +17,10 @@
                 <DataGridTextColumn Header="Type" Binding="{Binding AppointmentType.Name}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
-    </Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
+            <Button x:Name="btnAdd" Content="Toevoegen" Width="100" Height="30" IsEnabled="False"/>
+            <Button x:Name="btnEdit" Content="Wijzigen" Width="100" Height="30" IsEnabled="False" />
+            <Button x:Name="btnDelete" Content="Verwijderen" Width="100" Height="30" IsEnabled="False" />
+        </StackPanel>
+    </StackPanel>
 </Window>

@@ -28,5 +28,21 @@ namespace Agenda_WPF
                                                 .Include(app => app.AppointmentType)  // Eager loading van AppointmentType
                                                 .ToList();
         }
+
+        private void dgAppointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgAppointments.SelectedIndex == dgAppointments.Items.Count - 1)
+            {
+                btnAdd.IsEnabled = true;
+                btnEdit.IsEnabled = false;  
+                btnDelete.IsEnabled = false;
+            }
+            else
+            {
+                btnEdit.IsEnabled = true;
+                btnDelete.IsEnabled = true;
+                btnAdd.IsEnabled = false;
+            }
+        }
     }
 }
