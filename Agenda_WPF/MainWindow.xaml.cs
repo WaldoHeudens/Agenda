@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Agenda_Models;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +21,12 @@ namespace Agenda_WPF
         public MainWindow()
         {
             InitializeComponent();
+            AgendaDbContext context = new AgendaDbContext();
+            dgAppointments.ItemsSource = context.Appointments
+                                                .Where(app => app.Deleted >= DateTime.Now
+                                                                && app.From > DateTime.Now)
+                                                .Include(app => app.AppointmentType)  // Eager loading van AppointmentType
+                                                .ToList();
         }
     }
 }

@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Agenda_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="Agenda" Height="600" Width="1200">
+    <Grid Margin="15,45,0,0">
+        <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Wanneer" Binding="{Binding From}" Width="150"/>
+                <DataGridTextColumn Header="Tot" Binding="{Binding To}" Width="150"/>
+                <DataGridTextColumn Header="Afspraak" Binding="{Binding Title}" Width="200"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="300"/>
+                <DataGridTextColumn Header="Hele Dag?" Binding="{Binding AllDay}" Width="150"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding AppointmentType.Name}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
