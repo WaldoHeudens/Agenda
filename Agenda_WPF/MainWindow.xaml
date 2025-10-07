@@ -19,9 +19,9 @@
         </DataGrid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
-                <Button x:Name="btnAdd" Content="Toevoegen" Width="100" Height="30" />
+                <Button x:Name="btnAdd" Content="Toevoegen" Width="100" Height="30" Click="btnAdd_Click"/>
                 <Button x:Name="btnEdit" Content="Wijzigen" Width="100" Height="30" IsEnabled="False" Click="btnEdit_Click"/>
-                <Button x:Name="btnDelete" Content="Verwijderen" Width="100" Height="30" IsEnabled="False" />
+                <Button x:Name="btnDelete" Content="Verwijderen" Width="100" Height="30" IsEnabled="False" Click="btnDelete_Click" />
                 <Button x:Name="btnSave" Content="Opslaan" Width="100" Height="30" Margin="0,30,0,0" Visibility="Hidden" Click="btnSave_Click"/>
             </StackPanel>
             <Grid x:Name="grDetails" Margin="50,0,0,0" Visibility="Hidden">
@@ -43,7 +43,7 @@
                 <Label Content="Afspraak:" Grid.Row="1" Grid.Column="0" />
                 <TextBox x:Name="tbTitle" Grid.Row="1" Grid.Column="1" Text="{Binding Title,Mode=TwoWay}" Width="200" TextChanged="TextChanged" />
                 <Label Content="Extra Informatie:" Grid.Row="2" Grid.Column="0" />
-                <TextBox x:Name="tbDescription" Grid.Row="2" Grid.Column="1" Text="{Binding Description,Mode=TwoWay}" TextChanged="TextChanged" />
+                <TextBox x:Name="tbDescription" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" Text="{Binding Description,Mode=TwoWay}" AcceptsReturn="True" TextChanged="TextChanged" />
             </Grid>
         </StackPanel>
     </StackPanel>

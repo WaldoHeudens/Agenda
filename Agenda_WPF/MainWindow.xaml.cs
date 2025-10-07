@@ -68,17 +68,44 @@ namespace Agenda_WPF
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             AgendaDbContext context = new AgendaDbContext();
-            Appointment appointment = (Appointment)dgAppointments.SelectedItem;
-            Appointment contextAppointment = context.Appointments
-                                                        .FirstOrDefault(app => app.Id == appointment.Id);
-            if (contextAppointment != null)
-            {                 contextAppointment.From = appointment.From;
-                contextAppointment.To = appointment.To;
-                contextAppointment.Title = appointment.Title;
-                contextAppointment.Description = appointment.Description;
-                contextAppointment.AllDay = appointment.AllDay;
-                contextAppointment.AppointmentTypeId = appointment.AppointmentTypeId;
+            try
+            {
+                Appointment appointment = (Appointment)dgAppointments.SelectedItem;
+                Appointment contextAppointment = context.Appointments
+                                                            .FirstOrDefault(app => app.Id == appointment.Id);
+                if (contextAppointment != null)
+                {
+                    contextAppointment.From = appointment.From;
+                    contextAppointment.To = appointment.To;
+                    contextAppointment.Title = appointment.Title;
+                    contextAppointment.Description = appointment.Description;
+                    contextAppointment.AllDay = appointment.AllDay;
+                    contextAppointment.AppointmentTypeId = appointment.AppointmentTypeId;
+                    context.SaveChanges();
+                }
+            }
+            catch
+            {
+                Appointment appointment = (Appointment) grDetails.DataContext;
+                context.Appointments.Add(appointment);
                 context.SaveChanges();
+
+                dgAppointments.ItemsSource = (from app in context.Appointments
+                                              where app.Deleted >= DateTime.Now
+                                                      && app.From > DateTime.Now
+                                              orderby app.From
+                                              select new Appointment
+                                              {
+                                                  Id = app.Id,
+                                                  From = app.From,
+                                                  To = app.To,
+                                                  Title = app.Title,
+                                                  Description = app.Description,
+                                                  AllDay = app.AllDay,
+                                                  AppointmentType = app.AppointmentType
+                                              })
+                                            //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
+                                            .ToList();
             }
             btnSave.Visibility = Visibility.Hidden;
 
@@ -92,6 +119,44 @@ namespace Agenda_WPF
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
             btnSave.Visibility = Visibility.Visible;
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            btnSave.Visibility = Visibility.Hidden;
+            grDetails.Visibility = Visibility.Visible;
+            grDetails.DataContext = new Appointment();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            AgendaDbContext context = new AgendaDbContext();
+            Appointment appointment = (Appointment)dgAppointments.SelectedItem;
+            Appointment contextAppointment = context.Appointments
+                                                        .FirstOrDefault(app => app.Id == appointment.Id);
+            if (contextAppointment != null)
+            {
+                contextAppointment.Deleted = DateTime.Now;
+                context.SaveChanges();
+
+                dgAppointments.ItemsSource = (from app in context.Appointments
+                                              where app.Deleted >= DateTime.Now
+                                                      && app.From > DateTime.Now
+                                              orderby app.From
+                                              select new Appointment
+                                              {
+                                                  Id = app.Id,
+                                                  From = app.From,
+                                                  To = app.To,
+                                                  Title = app.Title,
+                                                  Description = app.Description,
+                                                  AllDay = app.AllDay,
+                                                  AppointmentType = app.AppointmentType
+                                              })
+                                            //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
+                                            .ToList();
+
+            }
         }
     }
 }
