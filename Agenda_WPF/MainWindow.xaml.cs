@@ -22,18 +22,32 @@ namespace Agenda_WPF
         {
             InitializeComponent();
             AgendaDbContext context = new AgendaDbContext();
-            dgAppointments.ItemsSource = context.Appointments
-                                                .Where(app => app.Deleted >= DateTime.Now
-                                                                && app.From > DateTime.Now)
-                                                .Include(app => app.AppointmentType)  // Eager loading van AppointmentType
-                                                .ToList();
+            //dgAppointments.ItemsSource = context.Appointments
+            //                                    .Where(app => app.Deleted >= DateTime.Now
+            //                                                    && app.From > DateTime.Now)
+            //                                    .Include(app => app.AppointmentType)  // Eager loading van AppointmentType
+            //                                    .ToList();
+            dgAppointments.ItemsSource = (from app in context.Appointments
+                                          where app.Deleted >= DateTime.Now
+                                                  && app.From > DateTime.Now
+                                          orderby app.From
+                                          select new Appointment{   Id = app.Id,
+                                                                    From=app.From, 
+                                                                    To= app.To, 
+                                                                    Title=app.Title, 
+                                                                    Description = app.Description, 
+                                                                    AllDay = app.AllDay, 
+                                                                    AppointmentType= app.AppointmentType })
+                                        //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
+                                        .ToList();
         }
 
         private void dgAppointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            grDetails.Visibility = Visibility.Hidden;
+            btnSave.Visibility = Visibility.Hidden;
             if (dgAppointments.SelectedIndex == dgAppointments.Items.Count - 1)
             {
-                btnAdd.IsEnabled = true;
                 btnEdit.IsEnabled = false;  
                 btnDelete.IsEnabled = false;
             }
@@ -41,8 +55,43 @@ namespace Agenda_WPF
             {
                 btnEdit.IsEnabled = true;
                 btnDelete.IsEnabled = true;
-                btnAdd.IsEnabled = false;
             }
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            grDetails.Visibility = Visibility.Visible;
+            grDetails.DataContext = dgAppointments.SelectedItem;
+            btnSave.Visibility = Visibility.Hidden;
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            AgendaDbContext context = new AgendaDbContext();
+            Appointment appointment = (Appointment)dgAppointments.SelectedItem;
+            Appointment contextAppointment = context.Appointments
+                                                        .FirstOrDefault(app => app.Id == appointment.Id);
+            if (contextAppointment != null)
+            {                 contextAppointment.From = appointment.From;
+                contextAppointment.To = appointment.To;
+                contextAppointment.Title = appointment.Title;
+                contextAppointment.Description = appointment.Description;
+                contextAppointment.AllDay = appointment.AllDay;
+                contextAppointment.AppointmentTypeId = appointment.AppointmentTypeId;
+                context.SaveChanges();
+            }
+            btnSave.Visibility = Visibility.Hidden;
+
+        }
+
+        private void SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btnSave.Visibility = Visibility.Visible;
+        }
+
+        private void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            btnSave.Visibility = Visibility.Visible;
         }
     }
 }

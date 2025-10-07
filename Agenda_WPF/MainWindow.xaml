@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Agenda_WPF"
         mc:Ignorable="d"
-        Title="Agenda" Height="600" Width="1200">
+        Title="Agenda" Height="700" Width="1200">
     <StackPanel Margin="15,45,0,0" Orientation="Vertical">
         <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single" SelectionChanged="dgAppointments_SelectionChanged">
             <DataGrid.Columns>
@@ -17,10 +17,34 @@
                 <DataGridTextColumn Header="Type" Binding="{Binding AppointmentType.Name}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
-            <Button x:Name="btnAdd" Content="Toevoegen" Width="100" Height="30" IsEnabled="False"/>
-            <Button x:Name="btnEdit" Content="Wijzigen" Width="100" Height="30" IsEnabled="False" />
-            <Button x:Name="btnDelete" Content="Verwijderen" Width="100" Height="30" IsEnabled="False" />
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
+                <Button x:Name="btnAdd" Content="Toevoegen" Width="100" Height="30" />
+                <Button x:Name="btnEdit" Content="Wijzigen" Width="100" Height="30" IsEnabled="False" Click="btnEdit_Click"/>
+                <Button x:Name="btnDelete" Content="Verwijderen" Width="100" Height="30" IsEnabled="False" />
+                <Button x:Name="btnSave" Content="Opslaan" Width="100" Height="30" Margin="0,30,0,0" Visibility="Hidden" Click="btnSave_Click"/>
+            </StackPanel>
+            <Grid x:Name="grDetails" Margin="50,0,0,0" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> 
+                    <RowDefinition Height="Auto"/> 
+                    <RowDefinition Height="*"/> 
+                </Grid.RowDefinitions>
+                <Label Content="Wanneer:" Grid.Row="0" Grid.Column="0"/>
+                <DatePicker x:Name="dpFrom" Grid.Row="0" Grid.Column="1" Text="{Binding From,Mode=TwoWay}" Width="150" HorizontalAlignment="Left" SelectedDateChanged="SelectedDateChanged" />
+                <Label Content="Tot:" Grid.Row="0" Grid.Column="2" />
+                <DatePicker x:Name="dpTo" Grid.Row="0" Grid.Column="3" Text="{Binding To,Mode=TwoWay}" Width="150" SelectedDateChanged="SelectedDateChanged"/>
+                <Label Content="Afspraak:" Grid.Row="1" Grid.Column="0" />
+                <TextBox x:Name="tbTitle" Grid.Row="1" Grid.Column="1" Text="{Binding Title,Mode=TwoWay}" Width="200" TextChanged="TextChanged" />
+                <Label Content="Extra Informatie:" Grid.Row="2" Grid.Column="0" />
+                <TextBox x:Name="tbDescription" Grid.Row="2" Grid.Column="1" Text="{Binding Description,Mode=TwoWay}" TextChanged="TextChanged" />
+            </Grid>
         </StackPanel>
     </StackPanel>
 </Window>
