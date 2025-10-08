@@ -21,6 +21,8 @@ namespace Agenda_Models
         [Required]
         public string Description { get; set; } = "";
 
+        public string Color { get; set; } = "#FF000000"; // Default zwart
+
         [Required]
         public DateTime Deleted { get; set; } = DateTime.MaxValue;
 
@@ -40,13 +42,12 @@ namespace Agenda_Models
                 new AppointmentType { Name = "-", Description = "-", Deleted = DateTime.MaxValue },
 
                 // Voeg enkele voorbeeld AppointmentTypes toe
-                new AppointmentType { Name = "Meeting", Description = "Business meeting"},
-                new AppointmentType { Name = "Doctor", Description = "Doctor's appointment" },
-                new AppointmentType { Name = "Holiday", Description = "Holiday event" },
-                new AppointmentType { Name = "Conference", Description = "Professional conference" }
+                new AppointmentType { Name = "Meeting", Description = "Business meeting", Color="FF0000FF"},
+                new AppointmentType { Name = "Doctor", Description = "Doctor's appointment", Color="FFFF0000"},
+                new AppointmentType { Name = "Holiday", Description = "Holiday event",  Color="FF00FF00" },
+                new AppointmentType { Name = "Conference", Description = "Professional conference", Color = "FFFFA500" }
             });
             return list;
-
         }
     }
 }

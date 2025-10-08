@@ -16,6 +16,11 @@
                 <DataGridTextColumn Header="Hele Dag?" Binding="{Binding AllDay}" Width="150"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding AppointmentType.Name}" Width="150"/>
             </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Foreground" Value="{Binding AppointmentType.Color}"/>
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
