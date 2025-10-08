@@ -27,7 +27,7 @@ namespace Agenda_Models
 
         public override string ToString()
         {
-            return $"{Id}: {Name} ({Description}) - Deleted: {Deleted}";
+            return Name;
         }
 
         // Voorzie ook een seeding data

@@ -44,6 +44,8 @@
                 <TextBox x:Name="tbTitle" Grid.Row="1" Grid.Column="1" Text="{Binding Title,Mode=TwoWay}" Width="200" TextChanged="TextChanged" />
                 <Label Content="Extra Informatie:" Grid.Row="2" Grid.Column="0" />
                 <TextBox x:Name="tbDescription" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" Text="{Binding Description,Mode=TwoWay}" AcceptsReturn="True" TextChanged="TextChanged" />
+                <Label Content="Type Afspraak:" Grid.Row="1" Grid.Column="2"/>
+                <ComboBox x:Name="cbTypes" Grid.Row="1" Grid.Column="3" SelectedItem="{Binding AppointmentType,Mode=TwoWay}" Width="150" HorizontalAlignment="Left" SelectionChanged="SelectedDateChanged" /> 
             </Grid>
         </StackPanel>
     </StackPanel>

@@ -40,6 +40,16 @@ namespace Agenda_WPF
                                                                     AppointmentType= app.AppointmentType })
                                         //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
                                         .ToList();
+            cbTypes.ItemsSource = context.AppointmentTypes
+                                    .Where(apt => apt.Deleted >= DateTime.Now)
+                                    .ToList();
+            
+            // Alternative LINQ query syntax is hier niet bruikbaar, want koppeling
+            // met AppointmentType object is nodig
+            //cbTypes.ItemsSource = (from apt in context.AppointmentTypes
+            //                      where apt.Deleted >= DateTime.Now
+            //                      select apt.Name )
+            //                    .ToList();
         }
 
         private void dgAppointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,7 +90,7 @@ namespace Agenda_WPF
                     contextAppointment.Title = appointment.Title;
                     contextAppointment.Description = appointment.Description;
                     contextAppointment.AllDay = appointment.AllDay;
-                    contextAppointment.AppointmentTypeId = appointment.AppointmentTypeId;
+                    contextAppointment.AppointmentTypeId = appointment.AppointmentType.Id;
                     context.SaveChanges();
                 }
             }
