@@ -15,7 +15,7 @@ namespace Agenda_Cons.Migrations
                 table: "AppointmentTypes",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: "#FF000000");
         }
 
         /// <inheritdoc />

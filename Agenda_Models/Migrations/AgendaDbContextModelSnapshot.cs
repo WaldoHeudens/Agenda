@@ -22,7 +22,7 @@ namespace Agenda_Cons.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Agenda_Models.Appointment", b =>
+            modelBuilder.Entity("Agenda_Models.Appointment", b => 
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
