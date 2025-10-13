@@ -1,4 +1,5 @@
 ﻿using Agenda_Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Data;
@@ -22,6 +23,19 @@ namespace Agenda_WPF
 
             // Setup DbContext als Service
             services.AddDbContext<AgendaDbContext>();
+
+            // Voeg Identity framework toe als service
+            services.AddIdentityCore<AgendaUser>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+            }).AddEntityFrameworkStores<AgendaDbContext>();
+
+
             services.AddLogging();
 
             // Creëer de ServiceProvider die overal toegangkelijk zal zijn

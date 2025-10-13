@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Agenda_Models
 {
-    public class AgendaDbContext: DbContext
+    public class AgendaDbContext: IdentityDbContext<AgendaUser>
     {
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
         public DbSet<Appointment> Appointments { get; set; } 
