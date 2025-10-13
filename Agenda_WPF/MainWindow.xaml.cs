@@ -18,10 +18,15 @@ namespace Agenda_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly AgendaDbContext _context;
+
+        public MainWindow(AgendaDbContext context)
         {
+            _context = context;
+
             InitializeComponent();
-            AgendaDbContext context = new AgendaDbContext();
+
+            // AgendaDbContext context = new AgendaDbContext();  Vervangen door Dependency Injection
             //dgAppointments.ItemsSource = context.Appointments
             //                                    .Where(app => app.Deleted >= DateTime.Now
             //                                                    && app.From > DateTime.Now)
@@ -77,11 +82,10 @@ namespace Agenda_WPF
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            AgendaDbContext context = new AgendaDbContext();
             try
             {
                 Appointment appointment = (Appointment)dgAppointments.SelectedItem;
-                Appointment contextAppointment = context.Appointments
+                Appointment contextAppointment = _context.Appointments
                                                             .FirstOrDefault(app => app.Id == appointment.Id);
                 if (contextAppointment != null)
                 {
@@ -91,16 +95,16 @@ namespace Agenda_WPF
                     contextAppointment.Description = appointment.Description;
                     contextAppointment.AllDay = appointment.AllDay;
                     contextAppointment.AppointmentTypeId = appointment.AppointmentType.Id;
-                    context.SaveChanges();
+                    _context.SaveChanges();
                 }
             }
             catch
             {
                 Appointment appointment = (Appointment) grDetails.DataContext;
-                context.Appointments.Add(appointment);
-                context.SaveChanges();
+                _context.Appointments.Add(appointment);
+                _context.SaveChanges();
 
-                dgAppointments.ItemsSource = (from app in context.Appointments
+                dgAppointments.ItemsSource = (from app in _context.Appointments
                                               where app.Deleted >= DateTime.Now
                                                       && app.From > DateTime.Now
                                               orderby app.From
@@ -140,16 +144,15 @@ namespace Agenda_WPF
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            AgendaDbContext context = new AgendaDbContext();
             Appointment appointment = (Appointment)dgAppointments.SelectedItem;
-            Appointment contextAppointment = context.Appointments
+            Appointment contextAppointment = _context.Appointments
                                                         .FirstOrDefault(app => app.Id == appointment.Id);
             if (contextAppointment != null)
             {
                 contextAppointment.Deleted = DateTime.Now;
-                context.SaveChanges();
+                _context.SaveChanges();
 
-                dgAppointments.ItemsSource = (from app in context.Appointments
+                dgAppointments.ItemsSource = (from app in _context.Appointments
                                               where app.Deleted >= DateTime.Now
                                                       && app.From > DateTime.Now
                                               orderby app.From
