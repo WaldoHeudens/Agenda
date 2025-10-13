@@ -23,6 +23,8 @@ namespace Agenda_Models
 
         public static void Seeder(AgendaDbContext context)
         {
+            AgendaUser.Seeder();
+
             if (!context.AppointmentTypes.Any())
             {
                 context.AppointmentTypes.AddRange(AppointmentType.SeedingData());
