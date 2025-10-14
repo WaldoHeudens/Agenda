@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Agenda_WPF"
         mc:Ignorable="d"
-        Title="Agenda" Height="700" Width="1200">
+        Title="Agenda" Height="700" Width="1150">
     <StackPanel Margin="15,0,0,0" Orientation="Vertical">
-        <Menu x:Name="mnNoUser" HorizontalAlignment="Right" Margin="15,5,20,5">
+        <Menu x:Name="mnNoUser" Style="{StaticResource MenuStyle}" HorizontalAlignment="Right">
             <MenuItem x:Name="mniRegister"  Header="Registreren" Click="mniRegister_Click"/>
             <MenuItem x:Name="mniLogin" Header="Inloggen" Click="mniLogin_Click" Margin="10,0,0,0"/> "
         </Menu>
-        <Menu x:Name="mnUserKnow" HorizontalAlignment="Right" Margin="15,5,20,5" Visibility="Collapsed">
+        <Menu x:Name="mnUserKnow" Style="{StaticResource MenuStyle}" HorizontalAlignment="Right" Visibility="Collapsed">
             <MenuItem x:Name="mniLogout"  Header="Afmelden" Click="mniLogout_Click"/>
             <MenuItem x:Name="mniName" Margin="10,0,0,0"/> "
         </Menu>
@@ -33,12 +33,12 @@
         </DataGrid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
-                <Button x:Name="btnAdd" Content="Toevoegen" Width="100" Height="30" Click="btnAdd_Click"/>
-                <Button x:Name="btnEdit" Content="Wijzigen" Width="100" Height="30" IsEnabled="False" Click="btnEdit_Click"/>
-                <Button x:Name="btnDelete" Content="Verwijderen" Width="100" Height="30" IsEnabled="False" Click="btnDelete_Click" />
-                <Button x:Name="btnSave" Content="Opslaan" Width="100" Height="30" Margin="0,30,0,0" Visibility="Hidden" Click="btnSave_Click"/>
+                <Button x:Name="btnAdd" Content="Toevoegen" Style="{StaticResource ButtonStyle}" Click="btnAdd_Click"/>
+                <Button x:Name="btnEdit" Content="Wijzigen" Style="{StaticResource ButtonStyle}" IsEnabled="False" Click="btnEdit_Click"/>
+                <Button x:Name="btnDelete" Content="Verwijderen" Style="{StaticResource ButtonStyle}" IsEnabled="False" Click="btnDelete_Click" />
+                <Button x:Name="btnSave" Content="Opslaan" Style="{StaticResource ButtonStyle}" Margin="0,30,0,0" Visibility="Hidden" Click="btnSave_Click"/>
             </StackPanel>
-            <Grid x:Name="grDetails" Margin="50,0,0,0" Visibility="Hidden">
+            <Grid x:Name="grDetails" Margin="50,15,0,0" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -53,13 +53,13 @@
                 <Label Content="Wanneer:" Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="0"/>
                 <DatePicker x:Name="dpFrom" Grid.Row="0" Grid.Column="1" Text="{Binding From,Mode=TwoWay}" Width="150" HorizontalAlignment="Left" SelectedDateChanged="SelectedDateChanged" />
                 <Label Content="Tot:" Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="2" />
-                <DatePicker x:Name="dpTo" Grid.Row="0" Grid.Column="3" Text="{Binding To,Mode=TwoWay}" Width="150" SelectedDateChanged="SelectedDateChanged"/>
+                <DatePicker x:Name="dpTo" Grid.Row="0" Grid.Column="3" Text="{Binding To,Mode=TwoWay}" Width="150" HorizontalAlignment="Left" SelectedDateChanged="SelectedDateChanged"/>
                 <Label Content="Afspraak:" Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0" />
-                <TextBox x:Name="tbTitle" Grid.Row="1" Grid.Column="1" Text="{Binding Title,Mode=TwoWay}" Width="200" TextChanged="TextChanged" />
-                <Label Content="Extra Informatie:" Style="{StaticResource LabelStyle}" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" />
-                <TextBox x:Name="tbDescription" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" Text="{Binding Description,Mode=TwoWay}" AcceptsReturn="True" TextChanged="TextChanged" />
+                <TextBox x:Name="tbTitle" Grid.Row="1" Grid.Column="1" Text="{Binding Title,Mode=TwoWay}" Style="{StaticResource TextBoxStyle}" TextChanged="TextChanged" />
                 <Label Content="Type Afspraak:" Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="2"/>
-                <ComboBox x:Name="cbTypes" Grid.Row="1" Grid.Column="3" SelectedItem="{Binding AppointmentType,Mode=TwoWay}" Width="150" HorizontalAlignment="Left" SelectionChanged="SelectedDateChanged" /> 
+                <ComboBox x:Name="cbTypes" Grid.Row="1" Grid.Column="3" SelectedItem="{Binding AppointmentType,Mode=TwoWay}" Width="150" HorizontalAlignment="Left" SelectionChanged="SelectedDateChanged" />
+                <Label Content="Extra Informatie:" Style="{StaticResource LabelStyle}" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" />
+                <TextBox x:Name="tbDescription" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Grid.ColumnSpan="3" Width="550" VerticalScrollBarVisibility="Auto" Text="{Binding Description,Mode=TwoWay}" AcceptsReturn="True" TextChanged="TextChanged" />
             </Grid>
         </StackPanel>
     </StackPanel>

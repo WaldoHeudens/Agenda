@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Agenda_WPF"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="250" Width="300">
+        Title="LoginWindow" Height="250" Width="360">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -20,10 +20,10 @@
         </Grid.RowDefinitions>
         <TextBlock Text="Inloggen" FontSize="24" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,20"/>
         <Label Content="Gebruikersnaam:" Grid.Column="0" Grid.Row="1" Style="{StaticResource LabelStyle}"/>
-        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" Width="150" HorizontalAlignment="Right" Margin="0,0,0,5"/>
+        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle}"/>
         <Label Content="Wachtwoord:" Grid.Column="0" Grid.Row="2" Style="{StaticResource LabelStyle}"/>
-        <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="2" Width="150" HorizontalAlignment="Right" Margin="0,0,0,5"  />
-        <Button x:Name="btnLogin" Content="Inloggen" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="100" Height="30" HorizontalAlignment="Center" Margin="0,20,0,0" Click="btnLogin_Click"/>
+        <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="2" Style="{StaticResource PasswordStyle}" Margin="0,0,0,5"  />
+        <Button x:Name="btnLogin" Content="Inloggen" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}"  HorizontalAlignment="Center" Margin="0,20,0,0" Click="btnLogin_Click"/>
         <TextBlock x:Name="tbError" Foreground="Red" FontSize="16" Margin="15,5,15,0" TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

@@ -24,18 +24,18 @@
         </Grid.RowDefinitions>
         <TextBlock Text="Registreren" FontSize="24" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,20"/>
         <Label Content="Gebruikersnaam:" Grid.Column="0" Grid.Row="1" Style="{StaticResource LabelStyle}"/>
-        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" Width="200" HorizontalAlignment="Right" Margin="0,0,0,5"/>
+        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle}"/>
         <Label Content="Voornaam" Grid.Column="0" Grid.Row="2"  Style="{StaticResource LabelStyle}"/>
-        <TextBox x:Name="tbFirstName" Grid.Column="1" Grid.Row="2" Width="200" HorizontalAlignment="Right" Margin="0,0,0,5"/>
+        <TextBox x:Name="tbFirstName" Grid.Column="1" Grid.Row="2" Style="{StaticResource TextBoxStyle}"/>
         <Label Content="Achternaam" Grid.Column="0" Grid.Row="3" Style="{StaticResource LabelStyle}"/>
-        <TextBox x:Name="tbLastName" Grid.Column="1" Grid.Row="3" Width="200" HorizontalAlignment="Right" Margin="0,0,0,5"/>
+        <TextBox x:Name="tbLastName" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBoxStyle}"/>
         <Label Content="Email:" Grid.Column="0" Grid.Row="4"  Style="{StaticResource LabelStyle}"/>
-        <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="4" Width="200" HorizontalAlignment="Right" Margin="0,0,0,5"/>
+        <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBoxStyle}"/>
         <Label Content="Wachtwoord:" Grid.Column="0" Grid.Row="5"  Style="{StaticResource LabelStyle}"/>
-        <PasswordBox x:Name="pbPassword" Grid.Column="1" Grid.Row="5" Width="200" HorizontalAlignment="Right" Margin="0,0,0,5"/>
+        <PasswordBox x:Name="pbPassword" Grid.Column="1" Grid.Row="5" Style="{StaticResource PasswordStyle}"/>
         <Label Content="Bevestig Wachtwoord:" Grid.Column="0" Grid.Row="6"  Style="{StaticResource LabelStyle}"/>
-        <PasswordBox x:Name="pbConfirmPassword" Grid.Column="1" Grid.Row="6" Width="200" HorizontalAlignment="Right" Margin="0,0,0,5"/>
-        <Button x:Name="btnRegister" Content="Registreren" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Width="100" Height="30" HorizontalAlignment="Center" Margin="0,20,0,0" Click="btnRegister_Click"/>
+        <PasswordBox x:Name="pbConfirmPassword" Grid.Column="1" Grid.Row="6" Style="{StaticResource PasswordStyle}"/>
+        <Button x:Name="btnRegister" Content="Registreren" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Center" Margin="0,20,0,0" Click="btnRegister_Click"/>
         <TextBlock x:Name="tbError" Foreground="Red" FontSize="16" Margin="15,5,15,0" TextWrapping="Wrap" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
