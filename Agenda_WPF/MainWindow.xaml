@@ -9,8 +9,13 @@
     <StackPanel Margin="15,0,0,0" Orientation="Vertical">
         <Menu x:Name="mnNoUser" HorizontalAlignment="Right" Margin="15,5,20,5">
             <MenuItem x:Name="mniRegister"  Header="Registreren" Click="mniRegister_Click"/>
+            <MenuItem x:Name="mniLogin" Header="Inloggen" Click="mniLogin_Click" Margin="10,0,0,0"/> "
         </Menu>
-        
+        <Menu x:Name="mnUserKnow" HorizontalAlignment="Right" Margin="15,5,20,5" Visibility="Collapsed">
+            <MenuItem x:Name="mniLogout"  Header="Afmelden" Click="mniLogout_Click"/>
+            <MenuItem x:Name="mniName" Margin="10,0,0,0"/> "
+        </Menu>
+
         <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single" SelectionChanged="dgAppointments_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Wanneer" Binding="{Binding From}" Width="150"/>

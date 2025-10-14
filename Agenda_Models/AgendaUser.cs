@@ -16,7 +16,7 @@ namespace Agenda_Models
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
 
-        static AgendaUser dummy = new AgendaUser
+        public static AgendaUser dummy = new AgendaUser
         {
             FirstName = "-",
             LastName = "-",
@@ -25,6 +25,10 @@ namespace Agenda_Models
             Email = "Dummy@Agenda.be"
         };
 
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
 
         public static async Task Seeder()
         {

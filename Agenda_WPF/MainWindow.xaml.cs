@@ -178,5 +178,17 @@ namespace Agenda_WPF
         {
             new RegisterWindow(_context, App.ServiceProvider.GetRequiredService<UserManager<AgendaUser>>()).ShowDialog();
         }
+
+        private void mniLogin_Click(object sender, RoutedEventArgs e)
+        {
+            new LoginWindow(App.ServiceProvider.GetRequiredService<UserManager<AgendaUser>>()).ShowDialog();
+        }
+
+        private void mniLogout_Click(object sender, RoutedEventArgs e)
+        {
+            mnUserKnow.Visibility = Visibility.Collapsed;
+            mnNoUser.Visibility = Visibility.Visible;
+            App.User = AgendaUser.dummy;
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace Agenda_WPF
     public partial class App : System.Windows.Application
     {
         static public ServiceProvider ServiceProvider { get; private set; }
+        static public AgendaUser User { get; set; }
+        static public MainWindow MainWindow { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -44,8 +46,10 @@ namespace Agenda_WPF
             AgendaDbContext context = new AgendaDbContext();
             AgendaDbContext.Seeder(context);
 
-            MainWindow mainWindow = new MainWindow(App.ServiceProvider.GetRequiredService<AgendaDbContext>());   
-            mainWindow.Show();
+            App.User = AgendaUser.dummy;
+
+            MainWindow = new MainWindow(App.ServiceProvider.GetRequiredService<AgendaDbContext>());   
+            MainWindow.Show();
         }
     }
 
