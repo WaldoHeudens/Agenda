@@ -1,5 +1,7 @@
 ﻿using Agenda_Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -170,6 +172,11 @@ namespace Agenda_WPF
                                             .ToList();
 
             }
+        }
+
+        private void mniRegister_Click(object sender, RoutedEventArgs e)
+        {
+            new RegisterWindow(_context, App.ServiceProvider.GetRequiredService<UserManager<AgendaUser>>()).ShowDialog();
         }
     }
 }

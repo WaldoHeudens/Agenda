@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:Agenda_WPF"
         mc:Ignorable="d"
         Title="Agenda" Height="700" Width="1200">
-    <StackPanel Margin="15,45,0,0" Orientation="Vertical">
+    <StackPanel Margin="15,0,0,0" Orientation="Vertical">
+        <Menu x:Name="mnNoUser" HorizontalAlignment="Right" Margin="15,5,20,5">
+            <MenuItem x:Name="mniRegister"  Header="Registreren" Click="mniRegister_Click"/>
+        </Menu>
+        
         <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single" SelectionChanged="dgAppointments_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Wanneer" Binding="{Binding From}" Width="150"/>
