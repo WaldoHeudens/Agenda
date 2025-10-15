@@ -28,37 +28,6 @@ namespace Agenda_WPF
 
             InitializeComponent();
 
-            // AgendaDbContext context = new AgendaDbContext();  Vervangen door Dependency Injection
-            //dgAppointments.ItemsSource = context.Appointments
-            //                                    .Where(app => app.Deleted >= DateTime.Now
-            //                                                    && app.From > DateTime.Now)
-            //                                    .Include(app => app.AppointmentType)  // Eager loading van AppointmentType
-            //                                    .ToList();
-            dgAppointments.ItemsSource = (from app in context.Appointments
-                                          where app.Deleted >= DateTime.Now
-                                                  && app.From > DateTime.Now
-                                                  && app.UserId == App.User.Id
-                                                  && app.UserId != "-"
-                                          orderby app.From
-                                          select new Appointment{   Id = app.Id,
-                                                                    From=app.From, 
-                                                                    To= app.To, 
-                                                                    Title=app.Title, 
-                                                                    Description = app.Description, 
-                                                                    AllDay = app.AllDay, 
-                                                                    AppointmentType= app.AppointmentType })
-                                        //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
-                                        .ToList();
-            cbTypes.ItemsSource = context.AppointmentTypes
-                                    .Where(apt => apt.Deleted >= DateTime.Now)
-                                    .ToList();
-            
-            // Alternative LINQ query syntax is hier niet bruikbaar, want koppeling
-            // met AppointmentType object is nodig
-            //cbTypes.ItemsSource = (from apt in context.AppointmentTypes
-            //                      where apt.Deleted >= DateTime.Now
-            //                      select apt.Name )
-            //                    .ToList();
         }
 
         private void dgAppointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,8 +58,7 @@ namespace Agenda_WPF
             try
             {
                 Appointment appointment = (Appointment)dgAppointments.SelectedItem;
-                Appointment contextAppointment = _context.Appointments
-                                                            .FirstOrDefault(app => app.Id == appointment.Id);
+                Appointment contextAppointment = _context.Appointments.FirstOrDefault(app => app.Id == appointment.Id);
                 if (contextAppointment != null)
                 {
                     contextAppointment.UserId = App.User.Id;
@@ -106,6 +74,7 @@ namespace Agenda_WPF
             catch
             {
                 Appointment appointment = (Appointment) grDetails.DataContext;
+                appointment.UserId= App.User.Id;
                 _context.Appointments.Add(appointment);
                 _context.SaveChanges();
 
@@ -113,18 +82,8 @@ namespace Agenda_WPF
                                               where app.Deleted >= DateTime.Now
                                                       && app.From > DateTime.Now
                                                        && app.UserId == App.User.Id
-                                                       && app.UserId != "-"
                                               orderby app.From
-                                              select new Appointment
-                                              {
-                                                  Id = app.Id,
-                                                  From = app.From,
-                                                  To = app.To,
-                                                  Title = app.Title,
-                                                  Description = app.Description,
-                                                  AllDay = app.AllDay,
-                                                  AppointmentType = app.AppointmentType
-                                              })
+                                              select app)
                                             //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
                                             .ToList();
             }
@@ -162,17 +121,9 @@ namespace Agenda_WPF
                 dgAppointments.ItemsSource = (from app in _context.Appointments
                                               where app.Deleted >= DateTime.Now
                                                       && app.From > DateTime.Now
+                                                      && app.UserId == App.User.Id
                                               orderby app.From
-                                              select new Appointment
-                                              {
-                                                  Id = app.Id,
-                                                  From = app.From,
-                                                  To = app.To,
-                                                  Title = app.Title,
-                                                  Description = app.Description,
-                                                  AllDay = app.AllDay,
-                                                  AppointmentType = app.AppointmentType
-                                              })
+                                              select app)
                                             //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
                                             .ToList();
 
@@ -189,6 +140,19 @@ namespace Agenda_WPF
             new LoginWindow(_context, App.ServiceProvider.GetRequiredService<UserManager<AgendaUser>>()).ShowDialog();
             if (App.User.Id != AgendaUser.dummy.Id)
             {
+                // Bij login moeten de afspraken opnieuw opgehaald worden voor deze gebruiker
+                dgAppointments.ItemsSource = (from app in _context.Appointments
+                                              where app.Deleted >= DateTime.Now
+                                                      && app.From > DateTime.Now
+                                                      && app.UserId == App.User.Id
+                                              orderby app.From
+                                              select app)
+                                            //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
+                                            .ToList();
+                cbTypes.ItemsSource = _context.AppointmentTypes
+                                        .Where(apt => apt.Deleted >= DateTime.Now
+                                                    && apt.UserId == App.User.Id)
+                                        .ToList();
                 dgAppointments.Visibility = Visibility.Visible;
                 spGeneral.Visibility = Visibility.Visible;
             }
@@ -199,8 +163,8 @@ namespace Agenda_WPF
             mnUserKnow.Visibility = Visibility.Collapsed;
             mnNoUser.Visibility = Visibility.Visible;
             mnUsers.Visibility = Visibility.Collapsed;
-            dgAppointments.Visibility = Visibility.Visible;
-            spGeneral.Visibility = Visibility.Visible;
+            dgAppointments.Visibility = Visibility.Collapsed;
+            spGeneral.Visibility = Visibility.Collapsed;
             App.User = AgendaUser.dummy;
         }
 

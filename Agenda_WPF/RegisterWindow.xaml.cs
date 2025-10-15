@@ -84,7 +84,23 @@ namespace Agenda_WPF
             if (result.Succeeded)
             {
                 MessageBox.Show("Je account is aangemaakt. Je kan nu inloggen.");
+
+                // Voeg de standaar User-Role toe aan de gebruiker
                 _context.Add(new IdentityUserRole<string>() { RoleId = "User", UserId = newUser.Id });
+
+                // Zorg dat de gebruiker de "default" appointmenttypes krijgt
+                List<AppointmentType> types = _context.AppointmentTypes.Where(at => at.UserId == AgendaUser.dummy.Id).ToList();
+                foreach (AppointmentType type in types)
+                {
+                    AppointmentType at = new AppointmentType
+                    {
+                        UserId = App.User.Id,
+                        Color = type.Color,
+                        Description = type.Description,
+                        Name = type.Name
+                    };
+                    _context.Add(at);
+                }
                 _context.SaveChanges();
                 this.Close();
             }
