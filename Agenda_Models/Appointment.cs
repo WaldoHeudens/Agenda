@@ -9,6 +9,10 @@ namespace Agenda_Models
         private DateTime _from = DateTime.Now + new TimeSpan(1, 0, 0, 0);
 
         public long Id { get; set; } // = -1;  Niet nodig, wordt automatisch gegenereerd    
+        [Required]
+        [ForeignKey ("AgendaUser")]
+        public string UserId { get; set; } = AgendaUser.dummy.Id;
+        public AgendaUser? User { get; set; }
 
         [Required]
         [Display(Name = "Vanaf")]

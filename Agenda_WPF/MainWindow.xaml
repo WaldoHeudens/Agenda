@@ -7,16 +7,24 @@
         mc:Ignorable="d"
         Title="Agenda" Height="700" Width="1150">
     <StackPanel Margin="15,0,0,0" Orientation="Vertical">
-        <Menu x:Name="mnNoUser" Style="{StaticResource MenuStyle}" HorizontalAlignment="Right">
+        <Menu x:Name="mnGeneral" Style="{StaticResource MenuStyle}" >
+            <MenuItem Header="Bestand">
+                <MenuItem x:Name="Quit" Header="Stoppen" Click="Quit_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="mnUsers" Header="Gebruikers" Visibility="Collapsed">
+                <MenuItem x:Name="Roles" Header="Rollen" Click="Roles_Click"/>
+            </MenuItem>
+        </Menu>
+        <Menu x:Name="mnNoUser" Style="{StaticResource MenuStyle}" HorizontalAlignment="Right" Margin="0,-30,0,0">
             <MenuItem x:Name="mniRegister"  Header="Registreren" Click="mniRegister_Click"/>
             <MenuItem x:Name="mniLogin" Header="Inloggen" Click="mniLogin_Click" Margin="10,0,0,0"/> "
         </Menu>
-        <Menu x:Name="mnUserKnow" Style="{StaticResource MenuStyle}" HorizontalAlignment="Right" Visibility="Collapsed">
+        <Menu x:Name="mnUserKnow" Style="{StaticResource MenuStyle}" HorizontalAlignment="Right" Visibility="Collapsed" Margin="0,-30,0,0">
             <MenuItem x:Name="mniLogout"  Header="Afmelden" Click="mniLogout_Click"/>
             <MenuItem x:Name="mniName" Margin="10,0,0,0"/> "
         </Menu>
 
-        <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single" SelectionChanged="dgAppointments_SelectionChanged">
+        <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single" SelectionChanged="dgAppointments_SelectionChanged" Visibility="Collapsed">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Wanneer" Binding="{Binding From}" Width="150"/>
                 <DataGridTextColumn Header="Tot" Binding="{Binding To}" Width="150"/>
@@ -31,7 +39,7 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel x:Name="spGeneral" Orientation="Horizontal" Visibility="Collapsed">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
                 <Button x:Name="btnAdd" Content="Toevoegen" Style="{StaticResource ButtonStyle}" Click="btnAdd_Click"/>
                 <Button x:Name="btnEdit" Content="Wijzigen" Style="{StaticResource ButtonStyle}" IsEnabled="False" Click="btnEdit_Click"/>

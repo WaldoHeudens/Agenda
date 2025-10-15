@@ -23,9 +23,11 @@ namespace Agenda_WPF
     public partial class LoginWindow : Window
     {
         private readonly UserManager<AgendaUser> _userManager;
+        private readonly AgendaDbContext _context;
 
-        public LoginWindow(UserManager<AgendaUser> userManager)
+        public LoginWindow(AgendaDbContext context, UserManager<AgendaUser> userManager)
         {
+            _context = context;
             _userManager = userManager;
             InitializeComponent();
         }
@@ -46,6 +48,11 @@ namespace Agenda_WPF
                             App.MainWindow.mnUserKnow.Visibility = Visibility.Visible;
                             App.MainWindow.mniName.Header = user.ToString();
                             Close();
+                        }
+                        IdentityUserRole<string>? userRole = _context.UserRoles.FirstOrDefault(ur => ur.UserId==App.User.Id && ur.RoleId=="UserAdmin");
+                        if (userRole != null)
+                        {
+                            App.MainWindow.mnUsers.Visibility= Visibility.Visible;
                         }
                     }
                     tbError.Text = "Ongeldige username of wachtwoord.";

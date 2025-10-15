@@ -27,21 +27,14 @@ namespace Agenda_WPF
             services.AddDbContext<AgendaDbContext>();
 
             // Voeg Identity framework toe als service
-            services.AddIdentityCore<AgendaUser>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 8;
-                options.Password.RequiredUniqueChars = 1; })
+            services.AddIdentityCore<AgendaUser>() // Use AddIdentityCore instead of AddIdentity
+                .AddRoles<IdentityRole>()          // Add roles support
                 .AddEntityFrameworkStores<AgendaDbContext>();
 
             services.AddLogging();
 
             // Creëer de ServiceProvider die overal toegangkelijk zal zijn
             ServiceProvider = services.BuildServiceProvider();
-
 
             AgendaDbContext context = new AgendaDbContext();
             AgendaDbContext.Seeder(context);

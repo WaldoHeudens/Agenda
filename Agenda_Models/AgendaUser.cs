@@ -18,11 +18,14 @@ namespace Agenda_Models
 
         public static AgendaUser dummy = new AgendaUser
         {
+            Id="-",
             FirstName = "-",
             LastName = "-",
             UserName = "Dummy",
             NormalizedUserName = "DUMMY",
-            Email = "Dummy@Agenda.be"
+            Email = "Dummy@Agenda.be",
+            LockoutEnabled = true,
+            LockoutEnd = DateTimeOffset.MaxValue
         };
 
         public override string ToString()

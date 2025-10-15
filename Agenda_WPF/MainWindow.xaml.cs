@@ -37,6 +37,8 @@ namespace Agenda_WPF
             dgAppointments.ItemsSource = (from app in context.Appointments
                                           where app.Deleted >= DateTime.Now
                                                   && app.From > DateTime.Now
+                                                  && app.UserId == App.User.Id
+                                                  && app.UserId != "-"
                                           orderby app.From
                                           select new Appointment{   Id = app.Id,
                                                                     From=app.From, 
@@ -91,6 +93,7 @@ namespace Agenda_WPF
                                                             .FirstOrDefault(app => app.Id == appointment.Id);
                 if (contextAppointment != null)
                 {
+                    contextAppointment.UserId = App.User.Id;
                     contextAppointment.From = appointment.From;
                     contextAppointment.To = appointment.To;
                     contextAppointment.Title = appointment.Title;
@@ -109,6 +112,8 @@ namespace Agenda_WPF
                 dgAppointments.ItemsSource = (from app in _context.Appointments
                                               where app.Deleted >= DateTime.Now
                                                       && app.From > DateTime.Now
+                                                       && app.UserId == App.User.Id
+                                                       && app.UserId != "-"
                                               orderby app.From
                                               select new Appointment
                                               {
@@ -181,14 +186,32 @@ namespace Agenda_WPF
 
         private void mniLogin_Click(object sender, RoutedEventArgs e)
         {
-            new LoginWindow(App.ServiceProvider.GetRequiredService<UserManager<AgendaUser>>()).ShowDialog();
+            new LoginWindow(_context, App.ServiceProvider.GetRequiredService<UserManager<AgendaUser>>()).ShowDialog();
+            if (App.User.Id != AgendaUser.dummy.Id)
+            {
+                dgAppointments.Visibility = Visibility.Visible;
+                spGeneral.Visibility = Visibility.Visible;
+            }
         }
 
         private void mniLogout_Click(object sender, RoutedEventArgs e)
         {
             mnUserKnow.Visibility = Visibility.Collapsed;
             mnNoUser.Visibility = Visibility.Visible;
+            mnUsers.Visibility = Visibility.Collapsed;
+            dgAppointments.Visibility = Visibility.Visible;
+            spGeneral.Visibility = Visibility.Visible;
             App.User = AgendaUser.dummy;
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Roles_Click(object sender, RoutedEventArgs e)
+        {
+            new RolesWindow(_context, App.ServiceProvider.GetRequiredService<UserManager<AgendaUser>>()).ShowDialog();
         }
     }
 }

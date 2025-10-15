@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,11 @@ namespace Agenda_Models
 
         // [Key]
         public int Id { get; set; }
+
+        [Required]
+        [ForeignKey("AgendaUser")]
+        public string UserId { get; set; } = AgendaUser.dummy.Id;
+        public AgendaUser? User { get; set; }
 
         [Required]
         public string Name { get; set; } = "";
