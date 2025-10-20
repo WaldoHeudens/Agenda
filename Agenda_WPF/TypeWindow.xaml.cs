@@ -21,9 +21,11 @@ namespace Agenda_WPF
     /// </summary>
     public partial class TypeWindow : Window
     {
+        
         AgendaDbContext _context;
         List<AppointmentType> changedObjects = new List<AppointmentType>();
         string _userId;
+
 
         public TypeWindow(AgendaDbContext context, string userId)
         {
@@ -36,7 +38,6 @@ namespace Agenda_WPF
                                                     && at.Deleted > DateTime.Now)
                                             .ToList();
             dgTypes.ItemsSource = types;
-
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -80,6 +81,11 @@ namespace Agenda_WPF
         private void dgTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnDelete.IsEnabled = true;
+        }
+
+        private void cpTest_SelectedColorChanged(object sender, RoutedEventArgs e)
+        {
+            //rectPicker.Fill = new SolidColorBrush(cpTest.SelectedColor);
         }
     }
 }
