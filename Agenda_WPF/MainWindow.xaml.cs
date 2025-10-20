@@ -111,8 +111,7 @@ namespace Agenda_WPF
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             Appointment appointment = (Appointment)dgAppointments.SelectedItem;
-            Appointment contextAppointment = _context.Appointments
-                                                        .FirstOrDefault(app => app.Id == appointment.Id);
+            Appointment contextAppointment = _context.Appointments.FirstOrDefault(app => app.Id == appointment.Id);
             if (contextAppointment != null)
             {
                 contextAppointment.Deleted = DateTime.Now;
@@ -155,6 +154,7 @@ namespace Agenda_WPF
                                         .ToList();
                 dgAppointments.Visibility = Visibility.Visible;
                 spGeneral.Visibility = Visibility.Visible;
+                mniTypes.Visibility = Visibility.Visible;
             }
         }
 
@@ -165,6 +165,8 @@ namespace Agenda_WPF
             mnUsers.Visibility = Visibility.Collapsed;
             dgAppointments.Visibility = Visibility.Collapsed;
             spGeneral.Visibility = Visibility.Collapsed;
+            mniTypes.Visibility = Visibility.Collapsed;
+            mniSystem.Visibility = Visibility.Collapsed;
             App.User = AgendaUser.dummy;
         }
 
@@ -176,6 +178,16 @@ namespace Agenda_WPF
         private void Roles_Click(object sender, RoutedEventArgs e)
         {
             new RolesWindow(_context, App.ServiceProvider.GetRequiredService<UserManager<AgendaUser>>()).ShowDialog();
+        }
+
+        private void mniTypes_Click(object sender, RoutedEventArgs e)
+        {
+            (new TypeWindow(_context, App.User.Id)).ShowDialog();
+        }
+
+        private void mniSystemTypes_Click(object sender, RoutedEventArgs e)
+        {
+            (new TypeWindow(_context, AgendaUser.dummy.Id)).ShowDialog();
         }
     }
 }

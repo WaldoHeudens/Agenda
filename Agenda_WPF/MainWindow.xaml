@@ -11,6 +11,10 @@
             <MenuItem Header="Bestand">
                 <MenuItem x:Name="Quit" Header="Stoppen" Click="Quit_Click"/>
             </MenuItem>
+            <MenuItem x:Name="mniTypes" Header="Mijn types" Visibility="Collapsed" Click="mniTypes_Click"/>
+            <MenuItem x:Name="mniSystem" Header="Parameters" Visibility="Collapsed">
+                <MenuItem x:Name="mniSystemTypes" Header="Types" Click="mniSystemTypes_Click"/>
+            </MenuItem>
             <MenuItem x:Name="mnUsers" Header="Gebruikers" Visibility="Collapsed">
                 <MenuItem x:Name="Roles" Header="Rollen" Click="Roles_Click"/>
             </MenuItem>

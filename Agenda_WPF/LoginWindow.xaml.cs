@@ -30,6 +30,7 @@ namespace Agenda_WPF
             _context = context;
             _userManager = userManager;
             InitializeComponent();
+            tbUsername.Focus();
         }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -54,6 +55,11 @@ namespace Agenda_WPF
                         {
                             App.MainWindow.mnUsers.Visibility= Visibility.Visible;
                         }
+                        userRole = _context.UserRoles.FirstOrDefault(ur => ur.UserId == App.User.Id && ur.RoleId == "SystemAdmin");
+                        if (userRole != null)
+                        {
+                            App.MainWindow.mniSystem.Visibility = Visibility.Visible;
+                        }
                     }
                     tbError.Text = "Ongeldige username of wachtwoord.";
                 }
@@ -63,6 +69,12 @@ namespace Agenda_WPF
 
                 }
             }
+        }
+
+        private void tb_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) 
+                btnLogin_Click(sender, e);
         }
     }
 }

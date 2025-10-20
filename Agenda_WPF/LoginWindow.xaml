@@ -18,11 +18,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Inloggen" FontSize="24" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,20"/>
+        <TextBlock Text="Aanmelden" FontSize="24" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,20"/>
         <Label Content="Gebruikersnaam:" Grid.Column="0" Grid.Row="1" Style="{StaticResource LabelStyle}"/>
-        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle}"/>
+        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle}" KeyUp="tb_KeyUp"/>
         <Label Content="Wachtwoord:" Grid.Column="0" Grid.Row="2" Style="{StaticResource LabelStyle}"/>
-        <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="2" Style="{StaticResource PasswordStyle}" Margin="0,0,0,5"  />
+        <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="2" Style="{StaticResource PasswordStyle}" Margin="0,0,0,5" KeyUp="tb_KeyUp" />
         <Button x:Name="btnLogin" Content="Inloggen" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}"  HorizontalAlignment="Center" Margin="0,20,0,0" Click="btnLogin_Click"/>
         <TextBlock x:Name="tbError" Foreground="Red" FontSize="16" Margin="15,5,15,0" TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
     </Grid>

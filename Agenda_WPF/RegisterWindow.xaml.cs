@@ -31,6 +31,7 @@ namespace Agenda_WPF
             _userManager = userManager;
             _context = context;
             InitializeComponent();
+            tbUsername.Focus();
         }
 
         private async void btnRegister_Click(object sender, RoutedEventArgs e)
