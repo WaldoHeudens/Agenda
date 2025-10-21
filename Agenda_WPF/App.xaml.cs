@@ -16,6 +16,8 @@ namespace Agenda_WPF
         static public AgendaUser User { get; set; }
         static public MainWindow MainWindow { get; set; }
 
+        static public string ConnectionString = "";
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

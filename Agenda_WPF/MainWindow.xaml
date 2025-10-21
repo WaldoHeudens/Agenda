@@ -28,6 +28,7 @@
             <MenuItem x:Name="mniName" Margin="10,0,0,0"/> "
         </Menu>
 
+        <TextBox x:Name="tbFilter" Style="{StaticResource TextBoxStyle}" Width="300" Text="" TextChanged="tbFilter_TextChanged" Visibility="Collapsed"/>
         <DataGrid x:Name="dgAppointments" Height="400" Width="1110" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="Single" SelectionChanged="dgAppointments_SelectionChanged" Visibility="Collapsed">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Wanneer" Binding="{Binding From}" Width="150"/>
@@ -46,7 +47,7 @@
         <StackPanel x:Name="spGeneral" Orientation="Horizontal" Visibility="Collapsed">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
                 <Button x:Name="btnAdd" Content="Toevoegen" Style="{StaticResource ButtonStyle}" Click="btnAdd_Click"/>
-                <Button x:Name="btnEdit" Content="Wijzigen" Style="{StaticResource ButtonStyle}" IsEnabled="False" Click="btnEdit_Click"/>
+                <Button x:Name="btnEdit" Content="Wijzigen"  Style="{StaticResource ButtonStyle}" IsEnabled="False" Click="btnEdit_Click"/>
                 <Button x:Name="btnDelete" Content="Verwijderen" Style="{StaticResource ButtonStyle}" IsEnabled="False" Click="btnDelete_Click" />
                 <Button x:Name="btnSave" Content="Opslaan" Style="{StaticResource ButtonStyle}" Margin="0,30,0,0" Visibility="Hidden" Click="btnSave_Click"/>
             </StackPanel>
@@ -74,7 +75,5 @@
                 <TextBox x:Name="tbDescription" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Grid.ColumnSpan="3" Width="550" VerticalScrollBarVisibility="Auto" Text="{Binding Description,Mode=TwoWay}" AcceptsReturn="True" TextChanged="TextChanged" />
             </Grid>
         </StackPanel>
-        <Rectangle x:Name="TestColorPicker" Width="150" Height="25"/>
-        <local:ColorPicker x:Name="clrPicker" SelectedColor="Blue"  SelectedColorChanged="clrPicker_SelectedColorChanged"  Background="Beige" Width="100" Height="20"/>
     </StackPanel>
 </Window>

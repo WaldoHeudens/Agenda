@@ -26,6 +26,7 @@ namespace Agenda_WPF
         List<AppointmentType> changedObjects = new List<AppointmentType>();
         string _userId;
 
+        Menu TypesContextMenu = new Menu();
 
         public TypeWindow(AgendaDbContext context, string userId)
         {
@@ -38,6 +39,8 @@ namespace Agenda_WPF
                                                     && at.Deleted > DateTime.Now)
                                             .ToList();
             dgTypes.ItemsSource = types;
+
+            TypesContextMenu.Items.Add(new TypeWindow(_context, App.User.Id));
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

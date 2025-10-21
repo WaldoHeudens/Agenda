@@ -27,9 +27,7 @@ namespace Agenda_WPF
             _context = context;
 
             InitializeComponent();
-
-            TestColorPicker.Fill = new SolidColorBrush(clrPicker.SelectedColor);
-
+            
         }
 
         private void dgAppointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -150,6 +148,7 @@ namespace Agenda_WPF
                                               select app)
                                             //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
                                             .ToList();
+                tbFilter.Text = "";
                 cbTypes.ItemsSource = _context.AppointmentTypes
                                         .Where(apt => apt.Deleted >= DateTime.Now
                                                     && apt.UserId == App.User.Id)
@@ -157,6 +156,7 @@ namespace Agenda_WPF
                 dgAppointments.Visibility = Visibility.Visible;
                 spGeneral.Visibility = Visibility.Visible;
                 mniTypes.Visibility = Visibility.Visible;
+                tbFilter.Visibility = Visibility.Visible;
             }
         }
 
@@ -166,6 +166,7 @@ namespace Agenda_WPF
             mnNoUser.Visibility = Visibility.Visible;
             mnUsers.Visibility = Visibility.Collapsed;
             dgAppointments.Visibility = Visibility.Collapsed;
+            tbFilter.Visibility = Visibility.Collapsed;
             spGeneral.Visibility = Visibility.Collapsed;
             mniTypes.Visibility = Visibility.Collapsed;
             mniSystem.Visibility = Visibility.Collapsed;
@@ -194,8 +195,27 @@ namespace Agenda_WPF
 
         private void clrPicker_SelectedColorChanged(object sender, RoutedEventArgs e)
         {
-            TestColorPicker.Fill = new SolidColorBrush(clrPicker.SelectedColor);
 
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            (new TypeWindow(_context, App.User.Id)).ShowDialog();
+        }
+
+        private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           dgAppointments.ItemsSource = (from app in _context.Appointments
+                                          where app.Deleted >= DateTime.Now
+                                                  && app.From > DateTime.Now
+                                                  && app.UserId == App.User.Id
+                                                  && (tbFilter.Text.Length==0 
+                                                        || (app.Title.Contains(tbFilter.Text)   
+                                                            || app.Description.Contains(tbFilter.Text)))
+                                          orderby app.From
+                                          select app)
+                            //.Include(app => app.AppointmentType)  // Eager loading van AppointmentType
+                            .ToList();
         }
     }
 }
