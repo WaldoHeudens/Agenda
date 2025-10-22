@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +17,32 @@ namespace Agenda_Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //string connectionString = "Server=localhost;Database=AgendaDb;User Id=sa;Password=Your_password123;MultipleActiveResultSets=true";
+            // Definieer de default connectiestring voor je project in je localhost
             string connectionString = "Server=(localdb)\\mssqllocaldb;Database=AgendaDb;Trusted_Connection=true;MultipleActiveResultSets=true";
-            
+
+            // Om de connectiestring te gebruiken die in je User Secrets moet je
+            // - een ConnectionString toevoegen aan de User Secrets van dit Model-project (deze class library)
+            // - de nodige PackageReferences toevoegen aan je projectfile ("Microsoft.Extensions.Configuration"-files:
+            //      Zie de projectfile van dit project) voor de juiste .NET versie 
+            // - moet je een geschikte configuratie bouwen met de ConfigurationBuilder().Build():
+            if (!optionsBuilder.IsConfigured)
+            {
+                try
+                {
+                    var config = new ConfigurationBuilder()
+                                        .SetBasePath(AppContext.BaseDirectory)  // De directory van de Model-Library, niet van het uitvoerend project
+                                        .AddJsonFile("appsettings.json", optional: true) // Haal de connectionstring uit de Json-file
+                                        .AddUserSecrets<AgendaDbContext>(optional: true) // Voeg de User Secrets toe
+                                        .AddEnvironmentVariables()
+                                        .Build();
+
+                    string con = config.GetConnectionString("ServerConnection"); // ServerConnection is de naam die ik in mijn User Secrets aan de connectionstring heb gegeven
+                    if (!con.IsNullOrEmpty())
+                        connectionString = con;
+                }
+                catch (Exception ex) { }
+            }
+
             optionsBuilder.UseSqlServer(connectionString);
         }
 
