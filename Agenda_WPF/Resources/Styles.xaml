@@ -49,15 +49,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ColorPicker}">
                     <Grid>
-                        <Rectangle x:Name="Part_Rectangle"
-                       Width="28" Height="18"
-                       Stroke="Black" StrokeThickness="1"
-                       HorizontalAlignment="Left" VerticalAlignment="Center"
-                       Margin="2"/>
-                        <Popup x:Name="Part_Popup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                       <Rectangle x:Name="CP_Rectangle" Width="28" Height="18" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2"/>
+                       <Popup x:Name="CP_Popup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}">
                             <Border Background="White" BorderBrush="Black" BorderThickness="1" Padding="6" CornerRadius="2">
                                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MaxHeight="200">
-                                    <ItemsControl x:Name="Part_Items" Width="200">
+                                    <ItemsControl x:Name="CP_Items" Width="200">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <WrapPanel Orientation="Horizontal" />
@@ -78,5 +74,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

@@ -12,50 +12,26 @@ using System.Windows.Shapes;
 
 namespace Agenda_WPF
 {
-
     // Onze eigen ColorPicker-klasse
+
+
+    [TemplatePart(Name = CP_Rectangle, Type = typeof(Rectangle))]
+    [TemplatePart(Name = CP_Popup, Type = typeof(Popup))]
+    [TemplatePart(Name = CP_Items, Type = typeof(ItemsControl))]
+
     public class ColorPicker : Control
     {
         private Rectangle _rect;        // De ColorPicker rechthoek die de kleur toont is als er geen "activiteit" is
         private Popup _popup;           // Het popup-window van de ColorPicker al er een muisklik is op de rechthoek
         private ItemsControl _items;    // De lijst met kleuren (Brushes) waaruit gekozen kan worden
 
-        private const string Part_Rect = "Part_Rectangle";  // De externe naam van de rechthoek
-        private const string Part_Popup = "Part_Popup";     // De externe naam van het popup-window
-        private const string Part_Items = "Part_Items";     // De externe naam van de list van kleuren
+        private const string CP_Rectangle = "CP_Rectangle";  // De externe naam van de rechthoek
+        private const string CP_Popup = "CP_Popup";         // De externe naam van het popup-window
+        private const string CP_Items = "CP_Items";         // De externe naam van de list van kleuren
 
-        public IEnumerable<Brush> PredefinedBrushes         // De verzameling van alle voorgedefinieerde kleuren (Brushes)
+        // Een array met de voorgedefinieerde kleuren:
+        private static readonly SolidColorBrush[] DefaultBrushes = new SolidColorBrush[]  
         {
-            get => (IEnumerable<Brush>)GetValue(PredefinedBrushesProperty);
-            set => SetValue(PredefinedBrushesProperty, value);
-        }
-
-
-
-        static ColorPicker()  // Statische constructor die de meta-data definieerd
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPicker), new FrameworkPropertyMetadata(typeof(ColorPicker)));
-        }
-
-        public ColorPicker()   // Constructor
-        {
-            PredefinedBrushes = DefaultBrushes;     // Zorg dat onze lijst van kleuren in de voorgedefinieerde kleuren zit
-        }
-
-        // Registratie van eigenschappen die zichtbaar zijn voor de buitenwereld:
-        // - DefaultBrushes
-        // - SelectedColor
-
-        public static readonly DependencyProperty PredefinedBrushesProperty =
-             DependencyProperty.Register(nameof(PredefinedBrushes), typeof(IEnumerable<Brush>),
-                 typeof(ColorPicker), new PropertyMetadata(DefaultBrushes));  
-
-        public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker),
-                new FrameworkPropertyMetadata(Colors.Transparent, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorChanged));
-
-        private static readonly SolidColorBrush[] DefaultBrushes = new SolidColorBrush[]  // Een array met de voorgedefinieerde kleuren
-{
                 Brushes.Black,
                 Brushes.White,
                 Brushes.Gray,
@@ -69,28 +45,59 @@ namespace Agenda_WPF
                 Brushes.Brown,
                 Brushes.Pink,
                 Brushes.Transparent
-};
+        };
 
-        public Color SelectedColor
+
+        public IEnumerable<SolidColorBrush> PredefinedBrushes         // De verzameling van alle voorgedefinieerde kleuren (Brushes)
         {
-            get => (Color)GetValue(SelectedColorProperty);
+            get => (IEnumerable<SolidColorBrush>)GetValue(PredefinedBrushesProperty);
+            set => SetValue(PredefinedBrushesProperty, value);
+        }
+
+        public SolidColorBrush SelectedColor
+        {
+            get => (SolidColorBrush)GetValue(SelectedColorProperty);
             set => SetValue(SelectedColorProperty, value);
         }
 
-        // Registratie van eventhandlers die zichtbaar moeten zijn 
-        // - SelectedColorChangedEvent en overeenkomstige delegate definitie SelectedColorChanged
-        private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        // Registratie van eigenschappen die zichtbaar zijn voor de buitenwereld:
+        // - DefaultBrushes
+        // - SelectedColor
+        public static readonly DependencyProperty PredefinedBrushesProperty =
+                DependencyProperty.Register(nameof(PredefinedBrushes), typeof(IEnumerable<SolidColorBrush>), typeof(ColorPicker),
+                new PropertyMetadata(DefaultBrushes));
+
+        public static readonly DependencyProperty SelectedColorProperty =
+                DependencyProperty.Register(nameof(SelectedColor), typeof(SolidColorBrush), typeof(ColorPicker),
+                new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorChanged));
+
+
+        static ColorPicker()  // Statische constructor die zorgt dat onze ColorPicker gekend is als type
         {
-            ColorPicker picker = (ColorPicker)d;
-            picker.UpdateRectangle();
-            picker.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPicker), new FrameworkPropertyMetadata(typeof(ColorPicker)));
         }
 
+        public ColorPicker()   // Constructor
+        {
+            PredefinedBrushes = DefaultBrushes;     // Zorg dat onze lijst van kleuren in de voorgedefinieerde verzameling kleuren zit
+        }
+
+
+
+
+        // De eventhandler die de logica behandelt bij het klikken op een kleur
         public static readonly RoutedEvent SelectedColorChangedEvent =
             EventManager.RegisterRoutedEvent(nameof(SelectedColorChanged), RoutingStrategy.Bubble,
                 typeof(RoutedEventHandler), typeof(ColorPicker));
 
+        private static void OnSelectedColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            ColorPicker picker = (ColorPicker) o;   // haal de instantie op van de aangeklikte ColorPicker
+            picker.UpdateRectangle();               // toon of verwijder de rechthoek met de kleurenkeuze
+            //picker.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));  // start het event met de uitvoering van (een) gebruikers-delegate(s)
+        }
 
+        // Toevoegen of verwijderen van een gebruikers-delegate
         public event RoutedEventHandler SelectedColorChanged
         {
             add => AddHandler(SelectedColorChangedEvent, value);
@@ -103,7 +110,7 @@ namespace Agenda_WPF
         {
             if (_rect != null)
             {
-                _rect.Fill = new SolidColorBrush(SelectedColor);
+                _rect.Fill = SelectedColor;
             }
         }
 
@@ -114,14 +121,15 @@ namespace Agenda_WPF
         {
             if (e.OriginalSource is Rectangle rect && rect.Fill is SolidColorBrush solidColorBrush)
             {
-                SelectedColor = solidColorBrush.Color;
+                SelectedColor = solidColorBrush;
                 _popup.IsOpen = false;
             }
             else if (e.OriginalSource is Border border && border.Background is SolidColorBrush borderSolidColorBrush2)
             {
-                SelectedColor = borderSolidColorBrush2.Color;
+                SelectedColor = borderSolidColorBrush2;
                 _popup.IsOpen = false;
             }
+            RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));  // start het event met de uitvoering van (een) gebruikers-delegate(s)
         }
 
 
@@ -146,17 +154,17 @@ namespace Agenda_WPF
                 _rect.MouseLeftButtonUp -= Rectangle_MouseLeftButtonUp;
             }
 
-            // Definieer de 3 onderdelen
-            _rect = (Rectangle)GetTemplateChild(Part_Rect);
-            _popup = (Popup)GetTemplateChild(Part_Popup);
-            _items = (ItemsControl)GetTemplateChild(Part_Items);
+            // Initialiseer de drie samenstellende onderdelen
+            _rect = (Rectangle) GetTemplateChild(CP_Rectangle);
+            _popup = (Popup)GetTemplateChild(CP_Popup);
+            _items = (ItemsControl)GetTemplateChild(CP_Items);
 
             if (_rect != null)
             {
                 // Initialiseer de rechthoek in de muis-eventhandler voor de rechthoek
                 UpdateRectangle();
                 _rect.Cursor = Cursors.Hand;
-                _rect.MouseLeftButtonUp += _rect_MouseLeftButtonUp;
+                _rect.MouseLeftButtonUp += Rectangle_MouseLeftButtonUp;
             }
 
             if (_items != null)
@@ -164,32 +172,7 @@ namespace Agenda_WPF
                 // Initializeer de items, en de eventhandlers van de items
                 _items.ItemsSource = PredefinedBrushes;
                 _items.MouseLeftButtonUp -= Items_MouseLeftButtonUp;
-                _items.MouseLeftButtonUp += _items_MouseLeftButtonUp;
-            }
-        }
-
-        // De eigenlijke eventhandler voor de kleurselectie
-        private void _items_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            // Clicking a swatch rectangle populates SelectedColor and closes popup
-            if (e.OriginalSource is Rectangle rect && rect.Fill is SolidColorBrush scb)
-            {
-                SelectedColor = scb.Color;
-                _popup.IsOpen = false;
-            }
-            else if (e.OriginalSource is Border border && border.Background is SolidColorBrush scb2)
-            {
-                SelectedColor = scb2.Color;
-                _popup.IsOpen = false;
-            }
-        }
-
-        // De eigenlijke eventhandler voor het openen van de popup
-        private void _rect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (_popup != null)
-            {
-                _popup.IsOpen = !_popup.IsOpen;
+                _items.MouseLeftButtonUp += Items_MouseLeftButtonUp;
             }
         }
     }

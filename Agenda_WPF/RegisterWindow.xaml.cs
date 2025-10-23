@@ -95,7 +95,7 @@ namespace Agenda_WPF
                 {
                     AppointmentType at = new AppointmentType
                     {
-                        UserId = App.User.Id,
+                        UserId = newUser.Id,
                         Color = type.Color,
                         Description = type.Description,
                         Name = type.Name

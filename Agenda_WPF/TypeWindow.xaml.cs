@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,28 +20,27 @@ namespace Agenda_WPF
     /// <summary>
     /// Interaction logic for TypeWindow.xaml
     /// </summary>
+    
     public partial class TypeWindow : Window
     {
-        
-        AgendaDbContext _context;
         List<AppointmentType> changedObjects = new List<AppointmentType>();
         string _userId;
 
-        Menu TypesContextMenu = new Menu();
+        private readonly AgendaDbContext _context;
 
         public TypeWindow(AgendaDbContext context, string userId)
         {
             _context = context;
             _userId = userId;
+
             InitializeComponent();
 
-            List<AppointmentType> types = _context.AppointmentTypes
-                                            .Where(at => at.UserId==userId
-                                                    && at.Deleted > DateTime.Now)
+            List<TypeViewModel> types = (from type in _context.AppointmentTypes
+                                            where type.UserId == userId
+                                                    && type.Deleted > DateTime.Now
+                                            select new TypeViewModel(type))
                                             .ToList();
             dgTypes.ItemsSource = types;
-
-            TypesContextMenu.Items.Add(new TypeWindow(_context, App.User.Id));
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -58,10 +58,11 @@ namespace Agenda_WPF
             btnDelete.IsEnabled = false;
         }
 
+
         private void dgTypes_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             btnSave.IsEnabled = true;
-            changedObjects.Add ((AppointmentType) dgTypes.SelectedItem);
+            changedObjects.Add (((TypeViewModel) dgTypes.SelectedItem).Type);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -86,9 +87,29 @@ namespace Agenda_WPF
             btnDelete.IsEnabled = true;
         }
 
-        private void cpTest_SelectedColorChanged(object sender, RoutedEventArgs e)
+
+        private void ColorPicker_SelectedColorChanged(object sender, RoutedEventArgs e)
         {
-            //rectPicker.Fill = new SolidColorBrush(cpTest.SelectedColor);
+            btnSave.IsEnabled = true;
+            TypeViewModel tvm = (TypeViewModel)dgTypes.SelectedItem;
+            tvm.Type.Color = tvm.Brush.Color.ToString();
+            changedObjects.Add(tvm.Type);
+        }
+    }
+
+    // Een "ViewModel" om de binding te maken met een SolidColorBrush, i.p.v. de string Color
+    class TypeViewModel
+    { 
+        public AppointmentType Type { get; set; }
+        public SolidColorBrush Brush { get; set; }
+
+        public TypeViewModel(AppointmentType type)
+        {
+            Type = type;
+            if (!Type.Color.StartsWith("#"))
+                Type.Color = type.Color.Insert(0, "#");
+            Color c = (Color)ColorConverter.ConvertFromString(Type.Color);
+            Brush = new SolidColorBrush(c);
         }
     }
 }

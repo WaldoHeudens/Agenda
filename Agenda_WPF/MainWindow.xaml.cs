@@ -27,7 +27,6 @@ namespace Agenda_WPF
             _context = context;
 
             InitializeComponent();
-            
         }
 
         private void dgAppointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -191,11 +190,6 @@ namespace Agenda_WPF
         private void mniSystemTypes_Click(object sender, RoutedEventArgs e)
         {
             (new TypeWindow(_context, AgendaUser.dummy.Id)).ShowDialog();
-        }
-
-        private void clrPicker_SelectedColorChanged(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

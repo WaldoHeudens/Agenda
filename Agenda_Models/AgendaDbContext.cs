@@ -37,8 +37,10 @@ namespace Agenda_Models
                                         .Build();
 
                     string con = config.GetConnectionString("ServerConnection"); // ServerConnection is de naam die ik in mijn User Secrets aan de connectionstring heb gegeven
-                    if (!con.IsNullOrEmpty())
-                        connectionString = con;
+                    
+                    // Haal volgende statements uit commentaar om te werken met de Connection Strings in User Secrets
+                    //if (!con.IsNullOrEmpty())
+                    //    connectionString = con;
                 }
                 catch (Exception ex) { }
             }

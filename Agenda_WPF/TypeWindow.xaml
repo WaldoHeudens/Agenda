@@ -10,19 +10,17 @@
         <TextBlock Text="Aanpassen van je afspraak types"  FontSize="24" HorizontalAlignment="Center" Margin="0,15,0,35" />
         <DataGrid x:Name="dgTypes" Margin="15,0,15,0" AutoGenerateColumns="False"  CellEditEnding="dgTypes_CellEditEnding" SelectionChanged="dgTypes_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="120" />
-                <DataGridTextColumn Header="Omschrijving" Binding="{Binding Description}" Width="200"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type.Name}" Width="120" />
+                <DataGridTextColumn Header="Omschrijving" Binding="{Binding Type.Description}" Width="200"/>
                 <DataGridTemplateColumn x:Name="cellColor" Header="Kleur">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <!--<Rectangle Width="35" Height="15" Fill="{Binding Color}" Stroke="Black"/>-->
-                            <local:ColorPicker SelectedColor="{Binding Color, Mode=TwoWay}" Width="60" />
+                            <local:ColorPicker SelectedColor="{Binding Brush, Mode=TwoWay}" Width="60" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <!--<TextBox Text="{Binding Color, Mode=TwoWay}"  Width="80"/>-->
-                            <local:ColorPicker SelectedColor="{Binding Color, Mode=TwoWay}" Width="60" />
+                            <local:ColorPicker SelectedColor="{Binding Brush, Mode=TwoWay}" Width="60" SelectedColorChanged="ColorPicker_SelectedColorChanged" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

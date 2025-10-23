@@ -48,10 +48,10 @@ namespace Agenda_Models
                 new AppointmentType { Name = "-", Description = "-", Deleted = DateTime.MaxValue },
 
                 // Voeg enkele voorbeeld AppointmentTypes toe, met seeding van kleur
-                new AppointmentType { Name = "Meeting", Description = "Business meeting", Color="FF0000FF"},
-                new AppointmentType { Name = "Doctor", Description = "Doctor's appointment", Color="FFFF0000"},
-                new AppointmentType { Name = "Holiday", Description = "Holiday event",  Color="FF00FF00" },
-                new AppointmentType { Name = "Conference", Description = "Professional conference", Color = "FFFFA500" }
+                new AppointmentType { Name = "Meeting", Description = "Business meeting", Color="#FF0000FF"},
+                new AppointmentType { Name = "Doctor", Description = "Doctor's appointment", Color="#FFFF0000"},
+                new AppointmentType { Name = "Holiday", Description = "Holiday event",  Color="#FF00FF00" },
+                new AppointmentType { Name = "Conference", Description = "Professional conference", Color = "#FFFFA500" }
             });
             return list;
         }
