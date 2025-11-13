@@ -17,14 +17,19 @@ namespace Agenda_Models
         public int Id { get; set; }
 
         [Required]
+        [Display (Name = "Gebruiker")]
         [ForeignKey("AgendaUser")]
         public string UserId { get; set; } = AgendaUser.dummy.Id;
+       
+        [Display(Name = "Gebruiker")]
         public AgendaUser? User { get; set; }
 
+        [Display(Name = "Type")]
         [Required]
         public string Name { get; set; } = "";
 
         [Required]
+        [Display(Name = "Wat is dit?")]
         public string Description { get; set; } = "";
 
         public string Color { get; set; } = "#FF000000"; // Kleur waarin de afspraken getoond zullen worden Default zwart
