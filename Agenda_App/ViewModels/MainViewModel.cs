@@ -35,6 +35,7 @@ namespace Agenda_App.ViewModels
                 app.Created = DateTime.Now;
                 Wat = string.Empty;
                 Wanneer = string.Empty;
+                appointments.Add(app);
             }
             catch(Exception ex)
             {

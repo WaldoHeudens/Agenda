@@ -11,7 +11,7 @@ namespace Agenda_Models
         public long Id { get; set; } // = -1;  Niet nodig, wordt automatisch gegenereerd    
         [Required]
         [ForeignKey ("AgendaUser")]
-        public string UserId { get; set; } = AgendaUser.dummy.Id;
+        public string UserId { get; set; } = AgendaUser.dummy!= null ? AgendaUser.dummy.Id : "-";
         public AgendaUser? User { get; set; }
 
         [Required]
@@ -57,7 +57,7 @@ namespace Agenda_Models
         [Required]
         [Display(Name = "Type")]
         [ForeignKey("AppointmentType")]
-        public int AppointmentTypeId { get; set; } = AppointmentType.Dummy.Id; // Standaard naar de Dummy verwijzen
+        public int AppointmentTypeId { get; set; } = AppointmentType.Dummy!=null ? AppointmentType.Dummy.Id : 1; // Standaard naar de Dummy verwijzen
 
         // Navigatie-eigenschap
         public AppointmentType? AppointmentType { get; set; }
