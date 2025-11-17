@@ -1,7 +1,19 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Agenda_Models;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("AgendaDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AgendaDbContextConnection' not found.");;
 
 //Add the dbContext service
 builder.Services.AddDbContext<Agenda_Models.AgendaDbContext>();
+
+builder.Services.AddDefaultIdentity<AgendaUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AgendaDbContext>();
+
+//// Toevoegen van UserManager / SignInManager voor AgendaUser
+//builder.Services.AddScoped(typeof(SignInManager<Microsoft.AspNetCore.Identity.IdentityUser>),
+//    sp => sp.GetRequiredService<SignInManager<AgendaUser>>());
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -36,6 +48,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -44,6 +57,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+app.MapRazorPages();
 
 
 app.Run();
