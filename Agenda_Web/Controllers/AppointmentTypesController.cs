@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Agenda_Cons.Migrations;
+using Agenda_Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Agenda_Models;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Agenda_Web.Controllers
 {
@@ -62,8 +63,13 @@ namespace Agenda_Web.Controllers
         // GET: AppointmentTypes/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            // Niet meer nodig, want UserId wordt automatisch ingevuld
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+
+            // We sturen wel een voorgedefinieerd model mee
+            string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            AppointmentType at = new AppointmentType { UserId = userId };
+            return View(at);
         }
 
         // POST: AppointmentTypes/Create
@@ -73,13 +79,15 @@ namespace Agenda_Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,Name,Description,Color,Deleted")] AppointmentType appointmentType)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(appointmentType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", appointmentType.UserId);
+            // Niet meer nodig, want UserId wordt automatisch ingevuld
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", appointmentType.UserId);
             return View(appointmentType);
         }
 
