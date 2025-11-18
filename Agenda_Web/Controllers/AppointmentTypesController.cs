@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Agenda_Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Agenda_Web.Controllers
 {
+    [Authorize (Roles = "User")]
     public class AppointmentTypesController : Controller
     {
         private readonly AgendaDbContext _context;
@@ -21,8 +23,21 @@ namespace Agenda_Web.Controllers
         // GET: AppointmentTypes
         public async Task<IActionResult> Index()
         {
-            var agendaDbContext = _context.AppointmentTypes.Include(a => a.User);
-            return View(await agendaDbContext.ToListAsync());
+            try
+            {
+                string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+
+                var agendaDbContext = _context.AppointmentTypes
+                                        .Where(a => a.Deleted > DateTime.Now
+                                                        && a.UserId == userId);
+                                        //.Include(a => a.User);
+                return View(await agendaDbContext.ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (you can use a logging framework here)
+                return View(new List<AppointmentType>());
+            }
         }
 
         // GET: AppointmentTypes/Details/5

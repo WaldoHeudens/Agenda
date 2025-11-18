@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SQLitePCL;
 
 namespace Agenda_Web.Areas.Identity.Pages.Account
 {
@@ -30,13 +31,15 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AgendaUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly AgendaDbContext _context;
 
         public RegisterModel(
             UserManager<AgendaUser> userManager,
             IUserStore<AgendaUser> userStore,
             SignInManager<AgendaUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            AgendaDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -140,7 +144,24 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+
+                    // Ken de standaard appointtypes toe aan de nieuwe gebruiker
                     await _userManager.AddToRoleAsync(user, "USER");
+                    List<AppointmentType> defaultAppointmentTypes = _context.AppointmentTypes
+                                                .Where(at => at.UserId == "-").ToList(); 
+                    foreach (var at in defaultAppointmentTypes)
+                    {
+                        AppointmentType appointmentType = new AppointmentType
+                        {
+                            UserId = userId,
+                            Name = at.Name,
+                            Description = at.Description,
+                            Color = at.Color,
+                            Deleted = at.Deleted
+                        };
+                        _context.AppointmentTypes.Add(appointmentType);
+                    }
+                    _context.SaveChanges();
 
                     // Send confirmation email:  Not implemented yet
 
