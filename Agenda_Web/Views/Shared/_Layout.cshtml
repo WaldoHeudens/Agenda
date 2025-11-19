@@ -29,6 +29,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="AppointmentTypes" asp-action="Index">Types</a>
                             </li>
                         }
+                        @if (User.IsInRole("UserAdmin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">User Management</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
