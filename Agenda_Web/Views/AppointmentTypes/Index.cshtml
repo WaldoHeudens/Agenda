@@ -33,8 +33,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
+                @*             <td style="color:#09F8C7"> *@
+            <td style="color:@item.Color">
+                 @Html.DisplayFor(modelItem => item.Color)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

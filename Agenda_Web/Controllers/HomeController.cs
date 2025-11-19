@@ -15,6 +15,8 @@ namespace Agenda_Web.Controllers
 
         public IActionResult Index()
         {
+            if (User.IsInRole("User"))
+                return Redirect("Appointments");
             return View();
         }
 

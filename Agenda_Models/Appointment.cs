@@ -17,6 +17,7 @@ namespace Agenda_Models
         [Required]
         [Display(Name = "Vanaf")]
         [DataType(DataType.DateTime)]
+        [DisplayFormat (DataFormatString = "{0:dd-MM-yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime From
         {
             get => _from;
@@ -29,6 +30,7 @@ namespace Agenda_Models
 
         [Required]
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Tot")]
         public DateTime To { get; set; } = DateTime.Now + new TimeSpan(1,1,30,0);
 

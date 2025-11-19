@@ -171,9 +171,10 @@ namespace Agenda_Web.Controllers
             var appointmentType = await _context.AppointmentTypes.FindAsync(id);
             if (appointmentType != null)
             {
-                _context.AppointmentTypes.Remove(appointmentType);
+                //_context.AppointmentTypes.Remove(appointmentType);
+                appointmentType.Deleted = DateTime.Now;
+                _context.Update(appointmentType);
             }
-
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
