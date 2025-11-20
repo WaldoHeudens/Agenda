@@ -24,14 +24,14 @@ namespace Agenda_Web.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Index(string username = "", string roleId = "?")
+        public async Task<IActionResult> Index(string username = "", string role = "?")
         {
             var agendaDbContext = from AgendaUser user in _context.Users
                                   where (user.UserName != "Dummy"
                                         && (username == "" || user.UserName.Contains(username)))
-                                        && (roleId == "?" || (from ur in _context.UserRoles
+                                        && (role == "?" || (from ur in _context.UserRoles
                                                             where ur.UserId == user.Id
-                                                            select ur.RoleId).Contains(roleId))
+                                                            select ur.RoleId).Contains(role))
                                   orderby user.UserName
                                   select new UserViewModel
                                   {
@@ -47,6 +47,7 @@ namespace Agenda_Web.Controllers
             ViewData["username"] = username;
             var roles = await _context.Roles.ToListAsync();
             roles.Add(new IdentityRole { Id = "?", Name = "?"});
+            ViewData["Roles"] = new SelectList(roles, "Id", "Id", roles.First(r => r.Id == role));
             ViewData["Roles"] = new SelectList(roles, "Id", "Name", roles.First(r => r.Id == roleId));
             return View(await agendaDbContext.ToListAsync());
         }
