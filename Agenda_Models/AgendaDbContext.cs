@@ -14,6 +14,8 @@ namespace Agenda_Models
     {
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
         public DbSet<Appointment> Appointments { get; set; } 
+        public DbSet<LogError> LogErrors { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
