@@ -42,5 +42,13 @@ namespace Agenda_App.ViewModels
                 // Handle parsing error (e.g., show a message to the user)
             }
         }
+
+        [RelayCommand]
+        async void Verwijder(Appointment appointment)
+        {
+            if(await Application.Current.MainPage.DisplayAlert("Verwijder Afspraak", "Ben je zeker dat je deze afspraak wil verwijderen?", "Ja", "Nee"))
+                Appointments.Remove(appointment);
+        }
+
     }
 }

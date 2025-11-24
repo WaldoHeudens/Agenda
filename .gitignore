@@ -362,3 +362,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Agenda_Models/DataRepository.cs
+/Agenda_Web/Agenda_Web.csproj
+/Agenda_App/Agenda_App.csproj
+/Agenda_App/MainPage.xaml
+/Agenda_App/MainPage.xaml.cs
+/Agenda_Web/Program.cs
+/Agenda_Web/ScaffoldingReadMe.txt
