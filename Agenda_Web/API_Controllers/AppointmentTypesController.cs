@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Agenda_Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Agenda_Web.API_Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize (Roles = "User")]
+
     public class AppointmentTypesController : ControllerBase
     {
         private readonly AgendaDbContext _context;
