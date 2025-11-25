@@ -35,6 +35,17 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">User Management</a>
                             </li>
                         }
+                        @if (User.IsInRole("SystemAdmin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown">System</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="LogErrors" asp-action="Index">Logging Errors</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
