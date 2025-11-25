@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Agenda_Models;
 using Agenda_Web.Services;
+using System.Reflection;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,13 @@ builder.Services.AddDefaultIdentity<AgendaUser>(options => options.SignIn.Requir
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Voor de configuratie van Restful API's
+builder.Services.AddControllers();
+
+// Voor het gebruik van Swagger
+builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Agenda_Web", Version = "v1" }); });
+
 
 // Configureer logging via de databank
 builder.Logging.AddDbLogger(options =>
@@ -47,6 +56,12 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Agenda_Web v1"));
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -69,6 +84,8 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapRazorPages();
+
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 
 app.Run();
