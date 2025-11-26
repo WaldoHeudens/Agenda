@@ -2,19 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Agenda_Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using Agenda_Models;
 
 namespace Agenda_Web.Areas.Identity.Pages.Account
 {
@@ -22,11 +23,13 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AgendaUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly AgendaDbContext _context;
 
-        public LoginModel(SignInManager<AgendaUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<AgendaUser> signInManager, ILogger<LoginModel> logger, AgendaDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -112,6 +115,13 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+                AgendaUser user = _context.Users.FirstOrDefault(u => u.UserName == Input.UserName);
+                Response.Cookies.Append(
+                    CookieRequestCultureProvider.DefaultCookieName,
+                    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(user.LanguageCode)),
+                    new CookieOptions { Expires = DateTimeOffset.UtcNow.AddMonths(1) }
+                    );
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

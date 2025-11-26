@@ -2,6 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Agenda_Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,16 +21,6 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
-using Agenda_Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using SQLitePCL;
 
 namespace Agenda_Web.Areas.Identity.Pages.Account
 {
@@ -137,9 +138,21 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
                 user.LastName = Input.LastName;
                 user.UserName = Input.UserName;
 
+                // Haal de gebruikerstaal op uit de cookies, anders standaard op "nl" zetten
+                string languageCode = "nl"; 
+
+                // Haal de mogelijke gekende taal/cultuur op van de gebruiker
+                string cookieCulture = Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+                if (cookieCulture != null)
+                {
+                    languageCode = cookieCulture.Substring(2, 2); // Extract the language code from the cookie value
+                }
+                user.LanguageCode = languageCode;
+
+                // Maak de gebruiker aan met het opgegeven wachtwoord
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-                if (result.Succeeded)
+                if (result.Succeeded)  // Alse de gebruiker aangemaakt werd...
                 {
                     _logger.LogInformation("User created a new account with password.");
 

@@ -2,14 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Agenda_Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SQLitePCL;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Agenda_Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Agenda_Web.Areas.Identity.Pages.Account.Manage
 {
@@ -17,13 +20,16 @@ namespace Agenda_Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<AgendaUser> _userManager;
         private readonly SignInManager<AgendaUser> _signInManager;
+        private readonly AgendaDbContext _context;
 
         public IndexModel(
             UserManager<AgendaUser> userManager,
-            SignInManager<AgendaUser> signInManager)
+            SignInManager<AgendaUser> signInManager,
+            AgendaDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         /// <summary>
@@ -61,6 +67,8 @@ namespace Agenda_Web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            public string LanguageCode { get; set; }
         }
 
         private async Task LoadAsync(AgendaUser user)
@@ -71,6 +79,8 @@ namespace Agenda_Web.Areas.Identity.Pages.Account.Manage
             FirstName = user.FirstName;
             LastName = user.LastName;
             Username = userName;
+            SelectList sl = new SelectList(Language.Languages.Where(l => l.Code != "- " && l.IsSystemLanguage), "Code", "Name", user.LanguageCode);
+            ViewData["Languages"] = sl;
 
             Input = new InputModel
             {
@@ -115,6 +125,19 @@ namespace Agenda_Web.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            if (user.LanguageCode != Input.LanguageCode)
+            {
+                user.LanguageCode = Input.LanguageCode;
+                _context.Update(user);
+                _context.SaveChanges();
+                Response.Cookies.Append(
+                    CookieRequestCultureProvider.DefaultCookieName,
+                    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(Input.LanguageCode)),
+                    new CookieOptions { Expires = DateTimeOffset.UtcNow.AddMonths(1) }
+                    );
+            }
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

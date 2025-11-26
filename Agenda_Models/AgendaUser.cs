@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,11 @@ namespace Agenda_Models
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
 
+        [ForeignKey("Language")]
+        public string LanguageCode { get; set; } = "nl";
+
+        public Language? Language { get; set; }
+
         public static AgendaUser dummy = new AgendaUser
         {
             Id="-",
@@ -25,7 +31,8 @@ namespace Agenda_Models
             NormalizedUserName = "DUMMY",
             Email = "Dummy@Agenda.be",
             LockoutEnabled = true,
-            LockoutEnd = DateTimeOffset.MaxValue
+            LockoutEnd = DateTimeOffset.MaxValue,
+            LanguageCode = "-",
         };
 
         public override string ToString()

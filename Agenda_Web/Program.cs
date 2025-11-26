@@ -38,6 +38,12 @@ builder.Logging.AddDbLogger(options =>
     }
 );
 
+// Toevoegen van localisatie services
+builder.Services.AddLocalization(options => options.ResourcesPath = "Translations");
+builder.Services.AddMvc()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -61,6 +67,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Agenda_Web v1"));
 }
+
+// Toevoegen van middleware voor localisatie
+var supportedCultures = new[] { "nl-BE", "en-US", "fr-FR", "en", "nl", "fr" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
