@@ -72,5 +72,11 @@
 	<ItemGroup>
 	  <Folder Include="Documentation\" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <MauiXaml Update="Pages\AppointmentPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 
 </Project>

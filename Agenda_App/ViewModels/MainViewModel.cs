@@ -1,4 +1,5 @@
-﻿using Agenda_Models;
+﻿using Agenda_App.Pages;
+using Agenda_Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -37,7 +38,7 @@ namespace Agenda_App.ViewModels
                 Wanneer = string.Empty;
                 appointments.Add(app);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Handle parsing error (e.g., show a message to the user)
             }
@@ -46,9 +47,14 @@ namespace Agenda_App.ViewModels
         [RelayCommand]
         async void Verwijder(Appointment appointment)
         {
-            if(await Application.Current.MainPage.DisplayAlert("Verwijder Afspraak", "Ben je zeker dat je deze afspraak wil verwijderen?", "Ja", "Nee"))
+            if (await Application.Current.MainPage.DisplayAlert("Verwijder Afspraak", "Ben je zeker dat je deze afspraak wil verwijderen?", "Ja", "Nee"))
                 Appointments.Remove(appointment);
         }
 
+        [RelayCommand]
+        async void Bewerk(Appointment appointment)
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new AppointmentPage(new AppointmentViewModel(appointment)));
+        }
     }
 }

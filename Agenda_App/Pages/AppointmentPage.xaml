@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Agenda_App.Pages.AppointmentPage"
+             Title="Appointment"
+             xmlns:viewmodel="clr-namespace:Agenda_App.ViewModels"
+             xmlns:models="clr-namespace:Agenda_Models;assembly=Agenda_Models"
+             x:DataType="viewmodel:AppointmentViewModel">
+
+    <VerticalStackLayout>
+        <Entry Placeholder="Vanaf?" Text="{Binding From}"/>
+        <Entry Placeholder="Tot?" Text="{Binding To}"/>
+        <Entry Placeholder="Wat?" Text="{Binding Title}"/>
+        <Entry Placeholder="Omschrijving?" Text="{Binding Description}"/>
+        <Entry Placeholder="Hele dag?" Text="{Binding AllDay}"/>
+        <Button Text="Bewaren" Command="{Binding SaveCommand}"/>
+    </VerticalStackLayout>
+    
+</ContentPage>

@@ -25,7 +25,10 @@
                                 <!--Voorbeeld van toevoeging van een eventhandler-->
                                 <SwipeItem Text="Bewerk" 
                                            BackgroundColor="LightGreen" 
-                                           Invoked="Bewerkt_Invoked"/> 
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},
+                                                             Path=BewerkCommand}"
+                                           CommandParameter="{Binding .}"/>
+                                <!--Invoked="Bewerkt_Invoked"/>--> 
                                 <!--Voorbeeld van puur MVVM, waarbij de bindingcontext een App_Appointment is-->
                                 <SwipeItem Text="Verwijder" 
                                            BackgroundColor="Red" 

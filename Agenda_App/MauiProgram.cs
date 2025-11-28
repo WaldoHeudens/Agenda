@@ -18,6 +18,10 @@ namespace Agenda_App
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<ViewModels.MainViewModel>();
 
+            // Toegevoegd als (Dependency Injection) service voor AppointmentPage en AppointmentViewModel
+            builder.Services.AddTransient<Pages.AppointmentPage>();
+            builder.Services.AddTransient<ViewModels.AppointmentViewModel>();
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

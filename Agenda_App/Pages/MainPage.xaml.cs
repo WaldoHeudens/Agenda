@@ -10,9 +10,9 @@ namespace Agenda_App
             BindingContext = _viewModel;
         }
 
-        private void Bewerkt_Invoked(object sender, EventArgs e)
-        {
+        //private void Bewerkt_Invoked(object sender, EventArgs e)
+        //{
 
-        }
+        //}
     }
 }
