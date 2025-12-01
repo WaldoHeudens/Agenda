@@ -1,13 +1,17 @@
-﻿@model IEnumerable<Agenda_Models.AppointmentType>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model IEnumerable<Agenda_Models.AppointmentType>
+
+@inject IViewLocalizer _localizer
+@inject IHtmlLocalizer<SharedResource> _shared
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@_shared["Lijst"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@_shared["Create"]</a>
 </p>
 <table class="table">
     <thead>
@@ -38,9 +42,9 @@
                  @Html.DisplayFor(modelItem => item.Color)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">@_shared["Edit"]</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">@_shared["Details"]</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">@_shared["Delete"]</a>
             </td>
         </tr>
 }

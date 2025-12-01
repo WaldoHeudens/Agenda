@@ -26,6 +26,138 @@
 
 	<ItemGroup>
 	  <Folder Include="Areas\Identity\Data\" />
-	  <Folder Include="Translations\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Translations\SharedResource.fr.resx" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Translations\SharedResource - Copy %282%29.Designer.cs">
+	    <DependentUpon>SharedResource.fr.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\SharedResource.en.Designer.cs">
+	    <DependentUpon>SharedResource.en.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\SharedResource.Designer.cs">
+	    <DependentUpon>SharedResource.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Models\Appointments.en.Designer.cs">
+	    <DependentUpon>Appointments.en.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Models\Appointments.fr.Designer.cs">
+	    <DependentUpon>Appointments.fr.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Models\Appointments.Designer.cs">
+	    <DependentUpon>Appointments.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Views\Appointments\Index.fr.Designer.cs">
+	    <DependentUpon>Index.fr.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Views\Appointments\Index.en.Designer.cs">
+	    <DependentUpon>Index.en.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Views\Appointments\Index.Designer.cs">
+	    <DependentUpon>Index.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Views\Shared\_Layout.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>_Layout.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Translations\Views\Shared\_LoginPartial.en.Designer.cs">
+	    <DependentUpon>_LoginPartial.en.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Views\Shared\_LoginPartial.fr.Designer.cs">
+	    <DependentUpon>_LoginPartial.fr.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Translations\Views\Shared\_LoginPartial.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>_LoginPartial.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Translations\SharedResource.en.resx">
+	    <LastGenOutput>SharedResource.en.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\SharedResource.fr.resx">
+	    <LastGenOutput>SharedResource - Copy (2).Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\SharedResource.resx">
+	    <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Models\Appointments.en.resx">
+	    <LastGenOutput>Appointments.en.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Models\Appointments.fr.resx">
+	    <LastGenOutput>Appointments.fr.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Models\Appointments.resx">
+	    <LastGenOutput>Appointments.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Appointments\Index.fr.resx">
+	    <LastGenOutput>Index.fr.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Appointments\Index.en.resx">
+	    <LastGenOutput>Index.en.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Appointments\Index.resx">
+	    <LastGenOutput>Index.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Shared\_LoginPartial.en.resx">
+	    <LastGenOutput>_LoginPartial.en.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Shared\_LoginPartial.fr.resx">
+	    <LastGenOutput>_LoginPartial.fr.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Shared\_LoginPartial.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>_LoginPartial.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Shared\_Layout.en.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Shared\_Layout.fr.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Translations\Views\Shared\_Layout.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 </Project>

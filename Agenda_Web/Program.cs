@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Agenda_Models;
 using Agenda_Web.Services;
-using System.Reflection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,7 +42,7 @@ builder.Logging.AddDbLogger(options =>
 // Toevoegen van localisatie services
 builder.Services.AddLocalization(options => options.ResourcesPath = "Translations");
 builder.Services.AddMvc()
-    .AddViewLocalization()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
 var app = builder.Build();
@@ -69,11 +70,13 @@ if (app.Environment.IsDevelopment())
 }
 
 // Toevoegen van middleware voor localisatie
-var supportedCultures = new[] { "nl-BE", "en-US", "fr-FR", "en", "nl", "fr" };
+var supportedCultures = new[] { "nl", "en", "fr" };
 var localizationOptions = new RequestLocalizationOptions()
     .SetDefaultCulture(supportedCultures[0])
     .AddSupportedCultures(supportedCultures)
     .AddSupportedUICultures(supportedCultures);
+app.UseRequestLocalization(localizationOptions);
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
