@@ -15,7 +15,7 @@ namespace Agenda_Models
         public AgendaUser? User { get; set; }
 
         [Required]
-        [Display(Name = "Vanaf")]
+        [Display(Name = "Vanaf", ResourceType = typeof(Resources.Appointment))]
         [DataType(DataType.DateTime)]
         [DisplayFormat (DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime From
@@ -31,37 +31,38 @@ namespace Agenda_Models
         [Required]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Tot")]
+        [Display(Name = "Tot", ResourceType = typeof(Resources.Appointment))]
         public DateTime To { get; set; } = DateTime.Now + new TimeSpan(1,1,30,0);
 
         [Required]
-        [Display(Name = "Titel")]
+        [Display(Name = "Titel", ResourceType = typeof(Resources.Appointment))]
         public string Title { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Omschrijving")]
+        [Display(Name = "Omschrijving", ResourceType = typeof(Resources.Appointment))]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Hele dag")]
+        [Display(Name = "Hele_dag", ResourceType = typeof(Resources.Appointment))]
         public bool AllDay { get; set; } = false;
 
         [Required]
-        [Display(Name = "Aangemaakt")]
+        [Display(Name = "Aangemaakt", ResourceType = typeof(Resources.Appointment))]
         public DateTime Created { get; set; } = DateTime.Now;
 
         [Required]
-        [Display(Name = "Verwijderd")]
+        [Display(Name = "Verwijderd", ResourceType = typeof(Resources.Appointment))]
         public DateTime Deleted { get; set; } = DateTime.MaxValue;
 
         // Foreign key naar AppointmentType:  Zorg voor de juiste één-op-veel relatie
         [Required]
-        [Display(Name = "Type")]
+        [Display(Name = "Type", ResourceType = typeof(Resources.Appointment))]
         [ForeignKey("AppointmentType")]
         public int AppointmentTypeId { get; set; } = AppointmentType.Dummy!=null ? AppointmentType.Dummy.Id : 1; // Standaard naar de Dummy verwijzen
 
         // Navigatie-eigenschap
+        [Display(Name = "Type", ResourceType = typeof(Resources.Appointment))]
         public AppointmentType? AppointmentType { get; set; }
 
 

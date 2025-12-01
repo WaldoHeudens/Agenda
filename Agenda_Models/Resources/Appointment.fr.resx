@@ -117,16 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-    <value>Bonjour</value>
+  <data name="Aangemaakt" xml:space="preserve">
+    <value>Créée</value>
   </data>
-  <data name="Login" xml:space="preserve">
-    <value>Entrer</value>
+  <data name="Hele_dag" xml:space="preserve">
+    <value>Toute la journée</value>
   </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Sortir</value>
+  <data name="Omschrijving" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="Register" xml:space="preserve">
-    <value>Registrer</value>
+  <data name="Titel" xml:space="preserve">
+    <value>Titre</value>
+  </data>
+  <data name="Tot" xml:space="preserve">
+    <value>Jusque</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Vanaf" xml:space="preserve">
+    <value>A partir de</value>
+  </data>
+  <data name="Verwijderd" xml:space="preserve">
+    <value>Efaçé</value>
   </data>
 </root>
