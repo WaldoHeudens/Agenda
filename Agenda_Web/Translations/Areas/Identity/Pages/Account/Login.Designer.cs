@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Agenda_Web.Translations.Models {
+namespace Agenda_Web.Translations.Areas.Identity.Pages.Account {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Agenda_Web.Translations.Models {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Appointments {
+    public class Login {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Appointments() {
+        internal Login() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Agenda_Web.Translations.Models {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Agenda_Web.Translations.Models.Appointments", typeof(Appointments).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Agenda_Web.Translations.Areas.Identity.Pages.Account.Login", typeof(Login).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,65 @@ namespace Agenda_Web.Translations.Models {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tot.
+        ///   Looks up a localized string similar to Wachtwoord vergeten?.
         /// </summary>
-        public static string Tot {
+        public static string ForgotPassword {
             get {
-                return ResourceManager.GetString("Tot", resourceCulture);
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vanaf.
+        ///   Looks up a localized string similar to Aanmelden.
         /// </summary>
-        public static string Vanaf {
+        public static string Log_in {
             get {
-                return ResourceManager.GetString("Vanaf", resourceCulture);
+                return ResourceManager.GetString("Log in", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wachtwoord.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registreren als nieuwe gebruiker.
+        /// </summary>
+        public static string RegisterAsNewUser {
+            get {
+                return ResourceManager.GetString("RegisterAsNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opnieuw verzenden van de e-mail confirmatie.
+        /// </summary>
+        public static string Resend_email_confirmation {
+            get {
+                return ResourceManager.GetString("Resend email confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gebruik je lokaal account om aan te melden.
+        /// </summary>
+        public static string Use_a_local_account_to_log_in_ {
+            get {
+                return ResourceManager.GetString("Use a local account to log in.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gebruikersnaam.
+        /// </summary>
+        public static string User_name {
+            get {
+                return ResourceManager.GetString("User name", resourceCulture);
             }
         }
     }

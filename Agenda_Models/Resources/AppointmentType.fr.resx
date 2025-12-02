@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Tot" xml:space="preserve">
-    <value>To</value>
+  <data name="Color" xml:space="preserve">
+    <value>Couleur</value>
   </data>
-  <data name="Vanaf" xml:space="preserve">
-    <value>From</value>
+  <data name="Description" xml:space="preserve">
+    <value>Déscription</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
   </data>
 </root>

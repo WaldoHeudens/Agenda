@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Agenda_Web.Translations {
+namespace Agenda_Models.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Agenda_Web.Translations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SharedResource {
+    public class AppointmentType {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SharedResource() {
+        internal AppointmentType() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Agenda_Web.Translations {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Agenda_Web.Translations.SharedResource", typeof(SharedResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Agenda_Models.Resources.AppointmentType", typeof(AppointmentType).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,29 @@ namespace Agenda_Web.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Afspraak.
+        ///   Looks up a localized string similar to Kleur.
         /// </summary>
-        public static string Appointment {
+        public static string Color {
             get {
-                return ResourceManager.GetString("Appointment", resourceCulture);
+                return ResourceManager.GetString("Color", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Terug naar overzicht.
+        ///   Looks up a localized string similar to Omschrijving.
         /// </summary>
-        public static string Back_to_List {
+        public static string Description {
             get {
-                return ResourceManager.GetString("Back to List", resourceCulture);
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toevoegen.
+        ///   Looks up a localized string similar to Typê.
         /// </summary>
-        public static string Create {
+        public static string Type {
             get {
-                return ResourceManager.GetString("Create", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Verwijderen.
-        /// </summary>
-        public static string Delete {
-            get {
-                return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Details.
-        /// </summary>
-        public static string Details {
-            get {
-                return ResourceManager.GetString("Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wijzigen.
-        /// </summary>
-        public static string Edit {
-            get {
-                return ResourceManager.GetString("Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Overzicht.
-        /// </summary>
-        public static string Lijst {
-            get {
-                return ResourceManager.GetString("Lijst", resourceCulture);
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
     }

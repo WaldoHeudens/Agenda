@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Appointment" xml:space="preserve">
+    <value>Rendez-vous</value>
+  </data>
+  <data name="Back to List" xml:space="preserve">
+    <value>Retour à la liste</value>
+  </data>
   <data name="Create" xml:space="preserve">
-    <value>New</value>
+    <value>Ajouter</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Efaçer</value>

@@ -24,14 +24,15 @@ namespace Agenda_Models
         [Display(Name = "Gebruiker")]
         public AgendaUser? User { get; set; }
 
-        [Display(Name = "Type")]
+        [Display(Name = "Type", ResourceType = typeof(Resources.AppointmentType))]
         [Required]
         public string Name { get; set; } = "";
 
         [Required]
-        [Display(Name = "Wat is dit?")]
+        [Display(Name = "Description", ResourceType = typeof(Resources.AppointmentType))]
         public string Description { get; set; } = "";
 
+        [Display(Name = "Color", ResourceType = typeof(Resources.AppointmentType))]
         public string Color { get; set; } = "#FF000000"; // Kleur waarin de afspraken getoond zullen worden Default zwart
 
         [Required]

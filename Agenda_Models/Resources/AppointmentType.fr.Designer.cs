@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Agenda_Web.Translations.Models {
+namespace Agenda_Models.Resources {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace Agenda_Web.Translations.Models {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Appointments___Copy__2_ {
+    internal class AppointmentType___Copy {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Appointments___Copy__2_() {
+        internal AppointmentType___Copy() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Agenda_Web.Translations.Models.Appointments - Copy (2)", typeof(Appointments___Copy__2_).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Agenda_Models.Resources.AppointmentType - Copy", typeof(AppointmentType___Copy).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,21 +51,12 @@ namespace Agenda_Web.Translations.Models {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nieuwe afspraak.
-        /// </summary>
-        public static string Vanaf {
-            get {
-                return ResourceManager.GetString("Vanaf", resourceCulture);
             }
         }
     }

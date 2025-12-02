@@ -117,25 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Appointment" xml:space="preserve">
-    <value>Afspraak</value>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Wachtwoord vergeten?</value>
   </data>
-  <data name="Back to List" xml:space="preserve">
-    <value>Terug naar overzicht</value>
+  <data name="Log in" xml:space="preserve">
+    <value>Aanmelden</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>Toevoegen</value>
+  <data name="Password" xml:space="preserve">
+    <value>Wachtwoord</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Verwijderen</value>
+  <data name="RegisterAsNewUser" xml:space="preserve">
+    <value>Registreren als nieuwe gebruiker</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Details</value>
+  <data name="Resend email confirmation" xml:space="preserve">
+    <value>Opnieuw verzenden van de e-mail confirmatie</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Wijzigen</value>
+  <data name="Use a local account to log in." xml:space="preserve">
+    <value>Gebruik je lokaal account om aan te melden</value>
   </data>
-  <data name="Lijst" xml:space="preserve">
-    <value>Overzicht</value>
+  <data name="User name" xml:space="preserve">
+    <value>Gebruikersnaam</value>
   </data>
 </root>

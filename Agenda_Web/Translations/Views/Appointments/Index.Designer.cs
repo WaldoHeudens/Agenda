@@ -70,33 +70,6 @@ namespace Agenda_Web.Translations.Views.Appointments {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verwijderen.
-        /// </summary>
-        public static string Delete {
-            get {
-                return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Details.
-        /// </summary>
-        public static string Details {
-            get {
-                return ResourceManager.GetString("Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wijzigen.
-        /// </summary>
-        public static string Edit {
-            get {
-                return ResourceManager.GetString("Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Overzicht.
         /// </summary>
         public static string Lijst {

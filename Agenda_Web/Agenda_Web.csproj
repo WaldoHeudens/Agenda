@@ -33,6 +33,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Translations\Areas\Identity\Pages\Account\Login.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Login.resx</DependentUpon>
+	  </Compile>
 	  <Compile Update="Translations\SharedResource - Copy %282%29.Designer.cs">
 	    <DependentUpon>SharedResource.fr.resx</DependentUpon>
 	    <DesignTime>True</DesignTime>
@@ -45,21 +50,6 @@
 	  </Compile>
 	  <Compile Update="Translations\SharedResource.Designer.cs">
 	    <DependentUpon>SharedResource.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	  <Compile Update="Translations\Models\Appointments.en.Designer.cs">
-	    <DependentUpon>Appointments.en.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	  <Compile Update="Translations\Models\Appointments.fr.Designer.cs">
-	    <DependentUpon>Appointments.fr.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	  <Compile Update="Translations\Models\Appointments.Designer.cs">
-	    <DependentUpon>Appointments.resx</DependentUpon>
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
@@ -101,6 +91,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="Translations\Areas\Identity\Pages\Account\Login.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Login.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Translations\SharedResource.en.resx">
 	    <LastGenOutput>SharedResource.en.Designer.cs</LastGenOutput>
 	    <Generator>PublicResXFileCodeGenerator</Generator>
@@ -111,18 +105,6 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Translations\SharedResource.resx">
 	    <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Translations\Models\Appointments.en.resx">
-	    <LastGenOutput>Appointments.en.Designer.cs</LastGenOutput>
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Translations\Models\Appointments.fr.resx">
-	    <LastGenOutput>Appointments.fr.Designer.cs</LastGenOutput>
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Translations\Models\Appointments.resx">
-	    <LastGenOutput>Appointments.Designer.cs</LastGenOutput>
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Translations\Views\Appointments\Index.fr.resx">

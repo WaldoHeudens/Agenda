@@ -120,16 +120,7 @@
   <data name="Create" xml:space="preserve">
     <value>Ajouter</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Efaçer</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>Détails</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Editer</value>
-  </data>
   <data name="Lijst" xml:space="preserve">
-    <value>Liste</value>
+    <value>Liste des rendez-vous</value>
   </data>
 </root>

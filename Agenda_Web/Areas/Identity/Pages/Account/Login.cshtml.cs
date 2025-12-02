@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -24,12 +26,14 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
         private readonly SignInManager<AgendaUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly AgendaDbContext _context;
+        private readonly IStringLocalizer<LoginModel> _localizer;
 
-        public LoginModel(SignInManager<AgendaUser> signInManager, ILogger<LoginModel> logger, AgendaDbContext context)
+        public LoginModel(SignInManager<AgendaUser> signInManager, ILogger<LoginModel> logger, AgendaDbContext context, IStringLocalizer<LoginModel> localizer)
         {
             _signInManager = signInManager;
             _logger = logger;
             _context = context;
+            _localizer = localizer;
         }
 
         /// <summary>
@@ -69,6 +73,7 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
+            [Display(Name = "User name")]
             public string UserName { get; set; }
 
             /// <summary>
@@ -77,6 +82,7 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Password")]
             public string Password { get; set; }
 
             /// <summary>
@@ -104,7 +110,7 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync( string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
 
@@ -117,14 +123,14 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
                 AgendaUser user = _context.Users.FirstOrDefault(u => u.UserName == Input.UserName);
-                Response.Cookies.Append(
-                    CookieRequestCultureProvider.DefaultCookieName,
-                    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(user.LanguageCode)),
-                    new CookieOptions { Expires = DateTimeOffset.UtcNow.AddMonths(1) }
-                    );
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    Response.Cookies.Append(
+                       CookieRequestCultureProvider.DefaultCookieName,
+                       CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(user.LanguageCode)),
+                       new CookieOptions { Expires = DateTimeOffset.UtcNow.AddMonths(1) }
+                       );
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -138,7 +144,7 @@ namespace Agenda_Web.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, _localizer["Invalid login attempt."]);
                     return Page();
                 }
             }
