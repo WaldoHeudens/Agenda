@@ -9,7 +9,8 @@ namespace Agenda_Web.API_Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        SignInManager<AgendaUser> _signInManager;   
+        readonly SignInManager<AgendaUser> _signInManager;   
+        
         public AccountsController(SignInManager<AgendaUser> signInManager) 
         { 
             _signInManager = signInManager;

@@ -11,9 +11,10 @@ namespace Agenda_App.ViewModels
 {
     public partial class AppointmentViewModel : ObservableObject
     {
-
-        public AppointmentViewModel(Appointment appointment)
+        readonly LocalDbContext _context;
+        public AppointmentViewModel(Appointment appointment, LocalDbContext context)
         { 
+            _context = context;
             this.appointment = appointment;
             Title = appointment.Title;
             Description = appointment.Description;
@@ -49,6 +50,9 @@ namespace Agenda_App.ViewModels
             appointment.From = From;
             appointment.To = To;
             appointment.AllDay = AllDay;
+            appointment.Deleted = General.Dirty; // Mark as dirty for synchronization
+            _context.Appointments.Update(appointment);
+            await _context.SaveChangesAsync();
             Application.Current.MainPage.Navigation.PopAsync();
         }
     }

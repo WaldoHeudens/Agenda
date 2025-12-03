@@ -1,12 +1,16 @@
 using Agenda_App.ViewModels;
+using Agenda_Models;
 
 namespace Agenda_App.Pages;
 
 public partial class AppointmentPage : ContentPage
 {
-	public AppointmentPage(AppointmentViewModel _viewModel)
+    readonly LocalDbContext _context; // Toegevoegd om de database context op te slaan  
+    public AppointmentPage(AppointmentViewModel _viewModel, LocalDbContext context)
 	{
-		InitializeComponent();
+        _context = context; // Initialiseer de database context
+
+        InitializeComponent();
 		BindingContext = _viewModel;
     }
 }

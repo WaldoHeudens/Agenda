@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Agenda_Models;
+using Microsoft.Extensions.Logging;
 
 namespace Agenda_App
 {
@@ -14,6 +15,10 @@ namespace Agenda_App
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            // Registreren van de dbContext als service
+            builder.Services.AddDbContext<LocalDbContext>();
+
             // Toegevoegd als (Dependency Injection) service voor MainPage en MainViewModel
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<ViewModels.MainViewModel>();

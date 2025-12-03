@@ -2,19 +2,23 @@
 using Agenda_Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SQLitePCL;
 using System.Collections.ObjectModel;
 
 namespace Agenda_App.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        public MainViewModel()
+        LocalDbContext _context;
+
+        public MainViewModel(LocalDbContext context)
         {
-            appointments = new ObservableCollection<Appointment>();
+            _context = context;
+            appointments = [.. _context.Appointments.Where(a => a.Deleted > DateTime.Now)];
         }
 
         [ObservableProperty]
-        ObservableCollection<Appointment> appointments = new ObservableCollection<Appointment>();
+        ObservableCollection<Appointment> appointments;
 
 
         [ObservableProperty]
@@ -29,13 +33,19 @@ namespace Agenda_App.ViewModels
         {
             try
             {
+                // Voeg een nieuwe afspraak toe met (voorlopige?) vaste waarden
                 Appointment app = new Appointment();
                 app.Title = Wat;
                 app.From = DateTime.Parse(Wanneer);
                 app.To = DateTime.Parse(Wanneer).AddHours(1);
                 app.Created = DateTime.Now;
+                app.AppointmentType = _context.AppointmentTypes.First(); // Standaard type
+                app.Deleted = General.Dirty;  // Nog niet gesynchroniseerd
                 Wat = string.Empty;
                 Wanneer = string.Empty;
+                app.User = _context.Users.First(); // Standaard gebruiker
+                _context.Appointments.Add(app);
+                _context.SaveChanges();
                 appointments.Add(app);
             }
             catch (Exception ex)
@@ -48,13 +58,19 @@ namespace Agenda_App.ViewModels
         async void Verwijder(Appointment appointment)
         {
             if (await Application.Current.MainPage.DisplayAlert("Verwijder Afspraak", "Ben je zeker dat je deze afspraak wil verwijderen?", "Ja", "Nee"))
-                Appointments.Remove(appointment);
+            {
+                appointment.Deleted = DateTime.Now;
+                _context.Update(appointment);
+                _context.SaveChanges();
+                Appointments = [.. _context.Appointments.Where(a => a.Deleted > DateTime.Now)];
+            }
         }
 
         [RelayCommand]
         async void Bewerk(Appointment appointment)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new AppointmentPage(new AppointmentViewModel(appointment)));
+            await Application.Current.MainPage.Navigation.PushAsync(new AppointmentPage(new AppointmentViewModel(appointment, _context), _context));
+            Appointments = [.. _context.Appointments.Where(a => a.Deleted > DateTime.Now)];
         }
     }
 }
