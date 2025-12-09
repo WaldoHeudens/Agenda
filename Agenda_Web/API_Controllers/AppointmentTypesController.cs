@@ -25,20 +25,30 @@ namespace Agenda_Web.API_Controllers
 
         // GET: api/AppointmentTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LocalAppointmentType>>> GetAppointmentTypes()
+        //public async Task<ActionResult<IEnumerable<LocalAppointmentType>>> GetAppointmentTypes()
+        public async Task<ActionResult<IEnumerable<AppointmentType>>> GetAppointmentTypes()
         {
-            string userId = _context.Users.First(user => user.UserName == User.Identity.Name).Id;
-            List<LocalAppointmentType> types = await (from at in _context.AppointmentTypes
-                                                where at.Deleted > DateTime.Now 
-                                                     && at.UserId == userId
-                                                select new LocalAppointmentType
-                                                 {
-                                                     Id = at.Id,
-                                                     Name = at.Name,
-                                                     Color = at.Color,
-                                                     Deleted = at.Deleted,
-                                                     UserId = at.UserId
-                                                 }).ToListAsync();
+            //string userId = _context.Users.First(user => user.UserName == User.Identity.Name).Id;
+            string userId = (string)HttpContext.Items["UserId"];
+
+            // Volgende conversie is correct om strong typing te forceren, maar eigenlijk overbodig
+            //List<LocalAppointmentType> types = await (from at in _context.AppointmentTypes
+            //                                    where at.Deleted > DateTime.Now 
+            //                                         && at.UserId == userId
+            //                                    select new LocalAppointmentType
+            //                                     {
+            //                                         Id = at.Id,
+            //                                         Name = at.Name,
+            //                                         Color = at.Color,
+            //                                         Deleted = at.Deleted,
+            //                                         UserId = at.UserId
+            //                                     }).ToListAsync();
+
+            // Dus houden we het simpel:
+            List<AppointmentType> types = await (from at in _context.AppointmentTypes
+                                                 where at.Deleted > DateTime.Now
+                                                      && at.UserId == userId
+                                                 select at).ToListAsync();
             return types;
         }
 

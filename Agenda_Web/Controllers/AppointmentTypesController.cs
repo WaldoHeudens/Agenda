@@ -26,7 +26,8 @@ namespace Agenda_Web.Controllers
         {
             try
             {
-                string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+                //string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+                string userId = (string)HttpContext.Items["UserId"];
 
                 var agendaDbContext = _context.AppointmentTypes
                                         .Where(a => a.Deleted > DateTime.Now
@@ -67,7 +68,8 @@ namespace Agenda_Web.Controllers
             //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
 
             // We sturen wel een voorgedefinieerd model mee
-            string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            //string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            string userId = (string)HttpContext.Items["UserId"];
             AppointmentType at = new AppointmentType { UserId = userId };
             return View(at);
         }

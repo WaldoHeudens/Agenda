@@ -101,6 +101,10 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
+
+// Toevoegen van mijn custom middleware.  Deze moet op het einde van de pipeline staan, net voor de endpoints
+app.UseMiddleware<Agenda_Web.Middleware.MijnGebruiker>();
+
 app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 

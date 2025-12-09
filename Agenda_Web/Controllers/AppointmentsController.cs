@@ -25,7 +25,9 @@ namespace Agenda_Web.Controllers
         {
             var agendaDbContext = _context.Appointments
                 .Where(a => a.Deleted >= DateTime.Now
-                            && a.UserId == _context.Users.First(u => u.UserName == User.Identity.Name).Id
+                            //&& a.UserId == _context.Users.First(u => u.UserName == User.Identity.Name).Id
+                            // Gebruik de user toegevoegd in onze middleware
+                            && a.UserId == (Request.HttpContext.Items["UserId"])
                             && a.From >= DateTime.Now)
                 .OrderBy(a => a.From)
                 .Include(a => a.AppointmentType);
@@ -55,7 +57,8 @@ namespace Agenda_Web.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
-            string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            //string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            string userId = (string)Request.HttpContext.Items["UserId"];
             var appointmentTypes = _context.AppointmentTypes.Where(at => at.Deleted > DateTime.Now && at.UserId == userId);
             ViewData["AppointmentTypeId"] = new SelectList(appointmentTypes, "Id", "Name");
             Appointment model = new Appointment { UserId = userId };
@@ -69,7 +72,8 @@ namespace Agenda_Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,From,To,Title,Description,AllDay,Created,Deleted,AppointmentTypeId")] Appointment appointment)
         {
-            string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            //string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            string userId = (string)Request.HttpContext.Items["UserId"];
             if (ModelState.IsValid)
             {
                 _context.Add(appointment);
@@ -94,7 +98,8 @@ namespace Agenda_Web.Controllers
             {
                 return NotFound();
             }
-            string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            //string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            string userId = (string)Request.HttpContext.Items["UserId"];
             var appointmentTypes = _context.AppointmentTypes.Where(at => at.Deleted > DateTime.Now && at.UserId == userId);
             ViewData["AppointmentTypeId"] = new SelectList(appointmentTypes, "Id", "Name");
             return View(appointment);
@@ -111,7 +116,8 @@ namespace Agenda_Web.Controllers
             {
                 return NotFound();
             }
-            string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            //string userId = _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            string userId = (string)Request.HttpContext.Items["UserId"];
 
             if (ModelState.IsValid)
             {

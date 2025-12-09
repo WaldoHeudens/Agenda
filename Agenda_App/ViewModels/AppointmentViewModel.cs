@@ -1,4 +1,5 @@
-﻿using Agenda_Models;
+﻿using Agenda_Cons.Migrations;
+using Agenda_Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -21,6 +22,7 @@ namespace Agenda_App.ViewModels
             From = appointment.From;
             To = appointment.To;
             AllDay = appointment.AllDay;
+            appointmentTypes = _context.LocalAppointmentTypes.ToList();
         }
 
         [ObservableProperty]
@@ -40,6 +42,12 @@ namespace Agenda_App.ViewModels
 
         [ObservableProperty]
         bool allDay;
+
+        [ObservableProperty]
+        List<AppointmentType> appointmentTypes;
+
+        [ObservableProperty]
+        AppointmentType selectedAppointmentType;
 
 
         [RelayCommand]
