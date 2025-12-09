@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "App with API",
+    "Projects": [
+      {
+        "Path": "Agenda_Web\\Agenda_Web.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "Agenda_App\\Agenda_App.csproj",
+        "Action": "Start",
+        "DebugTarget": "Windows Machine"
+      }
+    ]
+  }
+]

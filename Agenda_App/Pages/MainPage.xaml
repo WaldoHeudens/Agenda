@@ -8,7 +8,7 @@
 
 
     <Grid RowDefinitions="35, 150, 120, Auto, *" ColumnDefinitions=".75*,0.25*" Padding="10">
-        <Image Grid.Row="1" Grid.ColumnSpan="2" Source="agenda_pic.jpg" BackgroundColor="Bisque"/>
+        <Image Grid.Row="1" Grid.ColumnSpan="2" Source="agenda_pic.jpg" BackgroundColor="Bisque"    />
 
         <StackLayout Grid.Row="2" Margin="10">
             <Entry Placeholder="Wanneer?" Text="{Binding Wanneer}"/>

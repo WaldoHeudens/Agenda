@@ -2,6 +2,7 @@
 using Agenda_Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 using System.Collections.ObjectModel;
 
@@ -39,7 +40,7 @@ namespace Agenda_App.ViewModels
                 app.From = DateTime.Parse(Wanneer);
                 app.To = DateTime.Parse(Wanneer).AddHours(1);
                 app.Created = DateTime.Now;
-                app.AppointmentType = _context.AppointmentTypes.First(); // Standaard type
+                app.AppointmentType = _context.LocalAppointmentTypes.First(); // Standaard type
                 app.Deleted = General.Dirty;  // Nog niet gesynchroniseerd
                 Wat = string.Empty;
                 Wanneer = string.Empty;
@@ -72,5 +73,6 @@ namespace Agenda_App.ViewModels
             await Application.Current.MainPage.Navigation.PushAsync(new AppointmentPage(new AppointmentViewModel(appointment, _context), _context));
             Appointments = [.. _context.Appointments.Where(a => a.Deleted > DateTime.Now)];
         }
+
     }
 }

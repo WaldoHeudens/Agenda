@@ -62,4 +62,12 @@ namespace Agenda_Models
             return list;
         }
     }
+
+    public class  LocalAppointmentType:AppointmentType
+    {
+        // Deze klasse is nodig om een eigen primary key te kunnen definiëren voor lokale opslag
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public new int Id { get; set; }
+    }
 }

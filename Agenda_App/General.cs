@@ -9,5 +9,7 @@ namespace Agenda_App
     internal static class General
     {
         internal static readonly DateTime Dirty = new DateTime(2100, 1, 1);
+        internal static readonly string ApiUrl = "http://localhost:5128/api/";
+        internal static string UserId = "";
     }
 }

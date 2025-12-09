@@ -9,33 +9,47 @@ namespace Agenda_Web.API_Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        readonly SignInManager<AgendaUser> _signInManager;   
+        readonly SignInManager<AgendaUser> _signInManager; 
+        readonly AgendaDbContext _context;
         
-        public AccountsController(SignInManager<AgendaUser> signInManager) 
+        public AccountsController(SignInManager<AgendaUser> signInManager, AgendaDbContext context) 
         { 
             _signInManager = signInManager;
+            _context = context;
         }
 
-        // POST: api/Accounts/LogIn
-        [HttpPost]
-        [Route("/api/Login")]
-        public async Task<IActionResult> LogIn([FromBody] LoginModel model)
+        // Post: api/IsAuthorized
+        [HttpGet]
+        [Route("/api/isauthorized")]
+        public async Task<string> IsAuthorized()
         {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
+            if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return Ok();
+                // Als aangemeld, zend de user-Id terug
+                return _context.Users.First(u => u.UserName == User.Identity.Name).Id;
             }
             else
             {
-                return Unauthorized();
+                return "-";
             }
         }
-    }
 
-    public class LoginModel
-    {
-        public string UserName { get; set; }
-        public string Password { get; set; }
+
+        // POST: api/LogIn
+        [HttpPost]
+        [Route("/api/Login")]
+        public async Task<string> LogIn([FromBody] LoginModel model)
+        {
+            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: false, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                // Als aangemeld, zend de user-Id terug
+                return _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+            }
+            else
+            {
+                return "-";
+            }
+        }
     }
 }

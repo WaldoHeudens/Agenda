@@ -25,9 +25,21 @@ namespace Agenda_Web.API_Controllers
 
         // GET: api/AppointmentTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppointmentType>>> GetAppointmentTypes()
+        public async Task<ActionResult<IEnumerable<LocalAppointmentType>>> GetAppointmentTypes()
         {
-            return await _context.AppointmentTypes.Where(at => at.Deleted > DateTime.Now).ToListAsync();
+            string userId = _context.Users.First(user => user.UserName == User.Identity.Name).Id;
+            List<LocalAppointmentType> types = await (from at in _context.AppointmentTypes
+                                                where at.Deleted > DateTime.Now 
+                                                     && at.UserId == userId
+                                                select new LocalAppointmentType
+                                                 {
+                                                     Id = at.Id,
+                                                     Name = at.Name,
+                                                     Color = at.Color,
+                                                     Deleted = at.Deleted,
+                                                     UserId = at.UserId
+                                                 }).ToListAsync();
+            return types;
         }
 
         // GET: api/AppointmentTypes/5

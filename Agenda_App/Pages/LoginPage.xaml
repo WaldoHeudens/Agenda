@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Agenda_App.Pages.LoginPage"
+             Title="LoginPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Aanmelden"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            FontSize="25"
+            FontAttributes="Bold"
+            Margin="25"/>
+        <Entry Placeholder="Gebruikersnaam" Text="{Binding UserName}" />
+        <Entry IsPassword="True" Placeholder="Wachtwoord" Text="{Binding Password}" />
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding RememberMe}" />
+            <Label Text="Onthoud mij" />
+        </HorizontalStackLayout>
+        <Button Text="Aanmelden" Command="{Binding LoginCommand}" Margin="10"/>
+        <Button Text="Registeren" Command="{Binding RegisterCommand}" Margin="10"/>
+        <Label Text="{Binding Message}" 
+            TextColor="Red" 
+            IsVisible="{Binding IsMessageVisible}" 
+            HorizontalOptions="Center" 
+            Margin="10" />
+    </VerticalStackLayout>
+</ContentPage>
