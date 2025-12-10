@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model Agenda_Models.AppointmentType
+
+@inject IHtmlLocalizer<SharedResource> _shared
+
+@{
+    Layout = null;
+}
+
+
+@using (Html.AjaxBeginForm("EditType", "AppointmentTypes", new AjaxOptions {HttpMethod="post", InsertionMode=InsertionMode.Replace, UpdateTargetId=Model.Id.ToString() }))
+{
+    Html.AntiForgeryToken();
+
+    <tr id="#@Model.Id.ToString()">
+        <td>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserId" />
+            <input asp-for="Name" class="form-control" onchange="$(this.form).submit();"/>
+        </td>
+        <td>
+            <input asp-for="Description" class="form-control" onchange="$(this.form).submit();" />
+        </td>
+        <td style="color:@Model.Color">
+            <input asp-for="Color" class="form-control" onchange="$(this.form).submit();" />
+        </td>
+        <td>
+            <a asp-action="Delete" asp-route-id="@Model.Id">@_shared["Delete"]</a>
+        </td> 
+    </tr>
+}

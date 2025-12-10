@@ -93,6 +93,7 @@ namespace Agenda_Web.Controllers
             return View(appointmentType);
         }
 
+
         // GET: AppointmentTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -110,41 +111,68 @@ namespace Agenda_Web.Controllers
             return View(appointmentType);
         }
 
-        // POST: AppointmentTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,Name,Description,Color,Deleted")] AppointmentType appointmentType)
+        public async Task<IActionResult> EditType(int id, [Bind("Id,UserId,Name,Description,Color,Deleted")] AppointmentType appointmentType)
         {
             if (id != appointmentType.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(appointmentType);
+                    AppointmentType existing = _context.AppointmentTypes.First(at => at.Id == id);
+                    existing.Name = appointmentType.Name;
+                    existing.Description = appointmentType.Description;
+                    existing.Color = appointmentType.Color;
+
+                    _context.Update(existing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AppointmentTypeExists(appointmentType.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", appointmentType.UserId);
-            return View(appointmentType);
+            return PartialView("EditType", appointmentType);
         }
+
+        //POST: AppointmentTypes/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,Name,Description,Color,Deleted")] AppointmentType appointmentType)
+        //{
+        //    if (id != appointmentType.Id)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(appointmentType);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!AppointmentTypeExists(appointmentType.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", appointmentType.UserId);
+        //    return View(appointmentType);
+        //}
 
         // GET: AppointmentTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)

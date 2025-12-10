@@ -1,5 +1,6 @@
 using Agenda_Models;
 using Agenda_Web.Services;
+using AspNetCore.Unobtrusive.Ajax;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,9 @@ builder.Services.AddMvc()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
+// Registratie van de Ajax (Unobtrusive) service
+builder.Services.AddUnobtrusiveAjax();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -87,6 +91,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Middleware voor het gebruik van Ajax
+app.UseUnobtrusiveAjax();
+
+
 app.UseRouting();
 
 

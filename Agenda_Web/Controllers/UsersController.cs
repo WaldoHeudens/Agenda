@@ -38,7 +38,7 @@ namespace Agenda_Web.Controllers
                                       Id = user.Id,
                                       UserName = user.UserName,
                                       Email = user.Email,
-                                      Blocked = user.LockoutEnd.HasValue ? user.LockoutEnd.Value.DateTime >= DateTime.MinValue: false,
+                                      Blocked = user.LockoutEnd.HasValue ? user.LockoutEnd.Value.DateTime > DateTime.MinValue : false,
                                       Roles = (from ur in _context.UserRoles
                                                where ur.UserId == user.Id
                                                select ur.RoleId).ToList()
