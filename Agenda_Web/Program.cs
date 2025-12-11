@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using NuGet.Packaging.Signing;
 using System.Reflection;
 
 
@@ -50,6 +51,7 @@ builder.Services.AddMvc()
 builder.Services.AddUnobtrusiveAjax();
 
 var app = builder.Build();
+Globals.App = app;          // Houd een referentie bij naar deze actieve app
 
 using (var scope = app.Services.CreateScope())
 {

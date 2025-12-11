@@ -1,7 +1,11 @@
-﻿using Agenda_Models;
+﻿using Agenda_Cons.Migrations;
+using Agenda_Models;
+using Azure.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 
 namespace Agenda_Web.Services
 {
@@ -76,6 +80,7 @@ namespace Agenda_Web.Services
             {
                 LogError error = new LogError {
                     Application = "Agenda_Web",
+                    DeviceName = Globals.App.Environment.EnvironmentName,
                     ThreadId = Environment.CurrentManagedThreadId, // Get the current thread ID to use in the log file. 
                     LogLevel = logLevel.ToString(),
                     EventId = eventId == null ? 0 : eventId.Id,

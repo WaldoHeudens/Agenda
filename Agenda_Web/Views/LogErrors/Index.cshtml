@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.Application)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DeviceName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.LogLevel)
             </th>
             <th>
@@ -39,7 +42,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Application)
             </td>
-            <td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeviceName)
+                </td>
+                <td>
                 @Html.DisplayFor(modelItem => item.LogLevel)
             </td>
             <td>

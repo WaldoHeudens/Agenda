@@ -1,5 +1,4 @@
 ﻿using Agenda_Models;
-using Agenda_Models.Migrations;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
