@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Agenda_Models.Migrations
 {
     /// <inheritdoc />
-    public partial class initialDbLocal : Migration
+    public partial class Local_Initializing : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Language",
+                name: "Languages",
                 columns: table => new
                 {
                     Code = table.Column<string>(type: "TEXT", nullable: false),
@@ -22,11 +22,25 @@ namespace Agenda_Models.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Language", x => x.Code);
+                    table.PrimaryKey("PK_Languages", x => x.Code);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AgendaUser",
+                name: "Logins",
+                columns: table => new
+                {
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    RememberMe = table.Column<bool>(type: "INTEGER", nullable: false),
+                    ValidTill = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logins", x => x.Username);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
@@ -50,21 +64,20 @@ namespace Agenda_Models.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AgendaUser", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AgendaUser_Language_LanguageCode",
+                        name: "FK_Users_Languages_LanguageCode",
                         column: x => x.LanguageCode,
-                        principalTable: "Language",
+                        principalTable: "Languages",
                         principalColumn: "Code",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApointmentTypes",
+                name: "AppointmentTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
@@ -73,11 +86,11 @@ namespace Agenda_Models.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApointmentTypes", x => x.Id);
+                    table.PrimaryKey("PK_AppointmentTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ApointmentTypes_AgendaUser_UserId",
+                        name: "FK_AppointmentTypes_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "AgendaUser",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -86,8 +99,8 @@ namespace Agenda_Models.Migrations
                 name: "Appointments",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<long>(type: "INTEGER", nullable: false),
+                    AppointmentTypeId = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
                     From = table.Column<DateTime>(type: "TEXT", nullable: false),
                     To = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -95,35 +108,24 @@ namespace Agenda_Models.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     AllDay = table.Column<bool>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Deleted = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    AppointmentTypeId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Deleted = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_AgendaUser_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AgendaUser",
+                        name: "FK_Appointments_AppointmentTypes_AppointmentTypeId",
+                        column: x => x.AppointmentTypeId,
+                        principalTable: "AppointmentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointments_ApointmentTypes_AppointmentTypeId",
-                        column: x => x.AppointmentTypeId,
-                        principalTable: "ApointmentTypes",
+                        name: "FK_Appointments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AgendaUser_LanguageCode",
-                table: "AgendaUser",
-                column: "LanguageCode");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ApointmentTypes_UserId",
-                table: "ApointmentTypes",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_AppointmentTypeId",
@@ -134,6 +136,16 @@ namespace Agenda_Models.Migrations
                 name: "IX_Appointments_UserId",
                 table: "Appointments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppointmentTypes_UserId",
+                table: "AppointmentTypes",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_LanguageCode",
+                table: "Users",
+                column: "LanguageCode");
         }
 
         /// <inheritdoc />
@@ -143,13 +155,16 @@ namespace Agenda_Models.Migrations
                 name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "ApointmentTypes");
+                name: "Logins");
 
             migrationBuilder.DropTable(
-                name: "AgendaUser");
+                name: "AppointmentTypes");
 
             migrationBuilder.DropTable(
-                name: "Language");
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Languages");
         }
     }
 }

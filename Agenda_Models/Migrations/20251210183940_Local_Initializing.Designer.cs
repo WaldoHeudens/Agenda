@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agenda_Models.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    [Migration("20251203110020_initialDbLocal")]
-    partial class initialDbLocal
+    [Migration("20251210183940_Local_Initializing")]
+    partial class Local_Initializing
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,13 +83,32 @@ namespace Agenda_Models.Migrations
 
                     b.HasIndex("LanguageCode");
 
-                    b.ToTable("AgendaUser");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Agenda_Models.Appointment", b =>
+            modelBuilder.Entity("Agenda_Models.Language", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("IsActive")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsSystemLanguage")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Code");
+
+                    b.ToTable("Languages");
+                });
+
+            modelBuilder.Entity("Agenda_Models.LocalAppointment", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("AllDay")
@@ -131,10 +150,9 @@ namespace Agenda_Models.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("Agenda_Models.AppointmentType", b =>
+            modelBuilder.Entity("Agenda_Models.LocalAppointmentType", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Color")
@@ -160,27 +178,27 @@ namespace Agenda_Models.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ApointmentTypes");
+                    b.ToTable("AppointmentTypes");
                 });
 
-            modelBuilder.Entity("Agenda_Models.Language", b =>
+            modelBuilder.Entity("Agenda_Models.LoginModel", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<string>("Username")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("IsActive")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsSystemLanguage")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Code");
+                    b.Property<bool>("RememberMe")
+                        .HasColumnType("INTEGER");
 
-                    b.ToTable("Language");
+                    b.Property<DateTime>("ValidTill")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Username");
+
+                    b.ToTable("Logins");
                 });
 
             modelBuilder.Entity("Agenda_Models.AgendaUser", b =>
@@ -194,9 +212,9 @@ namespace Agenda_Models.Migrations
                     b.Navigation("Language");
                 });
 
-            modelBuilder.Entity("Agenda_Models.Appointment", b =>
+            modelBuilder.Entity("Agenda_Models.LocalAppointment", b =>
                 {
-                    b.HasOne("Agenda_Models.AppointmentType", "AppointmentType")
+                    b.HasOne("Agenda_Models.LocalAppointmentType", "AppointmentType")
                         .WithMany()
                         .HasForeignKey("AppointmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -213,7 +231,7 @@ namespace Agenda_Models.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Agenda_Models.AppointmentType", b =>
+            modelBuilder.Entity("Agenda_Models.LocalAppointmentType", b =>
                 {
                     b.HasOne("Agenda_Models.AgendaUser", "User")
                         .WithMany()

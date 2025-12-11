@@ -7,6 +7,7 @@ namespace Agenda_Models
     {
         public int Id { get; set; }
         public DateTime TimeStamp { get; set; }
+        public string DeviceName { get; set; } = string.Empty;
         public string Application { get; set; }
         public string LogLevel { get; set; }
         public int ThreadId { get; set; }

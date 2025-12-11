@@ -14,9 +14,10 @@ namespace Agenda_Models
     {
         public DbSet<Language> Languages { get; set; }
 
-        public DbSet<AppointmentType> LocalAppointmentTypes { get; set; }
+        public DbSet<LocalAppointmentType> AppointmentTypes { get; set; }
 
-        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<LocalAppointment> Appointments { get; set; }
+
         public DbSet<AgendaUser> Users { get; set; }
         public DbSet<LoginModel> Logins { get; set; }
 

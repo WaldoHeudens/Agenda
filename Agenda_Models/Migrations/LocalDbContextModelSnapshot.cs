@@ -83,10 +83,29 @@ namespace Agenda_Models.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Agenda_Models.Appointment", b =>
+            modelBuilder.Entity("Agenda_Models.Language", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("IsActive")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsSystemLanguage")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Code");
+
+                    b.ToTable("Languages");
+                });
+
+            modelBuilder.Entity("Agenda_Models.LocalAppointment", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("AllDay")
@@ -128,10 +147,9 @@ namespace Agenda_Models.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("Agenda_Models.AppointmentType", b =>
+            modelBuilder.Entity("Agenda_Models.LocalAppointmentType", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Color")
@@ -157,27 +175,7 @@ namespace Agenda_Models.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("LocalAppointmentTypes");
-                });
-
-            modelBuilder.Entity("Agenda_Models.Language", b =>
-                {
-                    b.Property<string>("Code")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("IsActive")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsSystemLanguage")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Code");
-
-                    b.ToTable("Languages");
+                    b.ToTable("AppointmentTypes");
                 });
 
             modelBuilder.Entity("Agenda_Models.LoginModel", b =>
@@ -211,9 +209,9 @@ namespace Agenda_Models.Migrations
                     b.Navigation("Language");
                 });
 
-            modelBuilder.Entity("Agenda_Models.Appointment", b =>
+            modelBuilder.Entity("Agenda_Models.LocalAppointment", b =>
                 {
-                    b.HasOne("Agenda_Models.AppointmentType", "AppointmentType")
+                    b.HasOne("Agenda_Models.LocalAppointmentType", "AppointmentType")
                         .WithMany()
                         .HasForeignKey("AppointmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -230,7 +228,7 @@ namespace Agenda_Models.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Agenda_Models.AppointmentType", b =>
+            modelBuilder.Entity("Agenda_Models.LocalAppointmentType", b =>
                 {
                     b.HasOne("Agenda_Models.AgendaUser", "User")
                         .WithMany()
