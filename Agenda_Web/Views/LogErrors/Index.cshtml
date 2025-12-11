@@ -1,4 +1,10 @@
-﻿@model IEnumerable<Agenda_Models.LogError>
+﻿@using Agenda_Web.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@model PageList<Agenda_Models.LogError>
+
+@inject IViewLocalizer _localizer
+@inject IHtmlLocalizer<SharedResource> _shared
 
 @{
     ViewData["Title"] = "Index";
@@ -10,27 +16,40 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
+                @_localizer["Time Stamp"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Application)
+                @_localizer["Application"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeviceName)
+                @_localizer["Device Name"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LogLevel)
+                @_localizer["Level"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThreadId)
+                @_localizer["Thread Id"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EventId)
+                @_localizer["Event Id"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EventName)
+                @_localizer["Event Name"]
             </th>
             <th></th>
+        </tr>
+        <tr>
+            <form asp-action="Index" asp-controller="LogErrors" method="get">
+            <th></th>
+            <th>
+                <input type="text" name="application" class="form-control" value="@ViewBag.application" placeholder="?" onchange="$(this.form).submit();" />
+            </th>
+            <th></th>
+            <th>
+                <input type="text" name="level" class="form-control" value="@ViewBag.level" placeholder="?" onchange="$(this.form).submit();" />
+            </th>
+            <th></th>
+            </form>
         </tr>
     </thead>
     <tbody>
@@ -58,10 +77,35 @@
                 @Html.DisplayFor(modelItem => item.EventName)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">@_shared["Details"]</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">@_shared["Delete"]</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+
+<a asp-action="Index"
+   asp-route-type=@ViewData["Type"]
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-application=@ViewBag.application
+   asp-route-level="@ViewBag.level"
+   class="btn btn-default @prevDisabled">
+    @_shared["Previous"]
+</a>
+<a asp-action="Index"
+   asp-route-type=@ViewData["Type"]
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-application=@ViewBag.application
+   asp-route-level="@ViewBag.level"
+   class="btn btn-default @nextDisabled">
+    @_shared["Next"]
+</a>
+
+

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Agenda_Models;
+using Agenda_Web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Agenda_Models;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata;
+using System.Threading.Tasks;
 
 namespace Agenda_Web.Controllers
 {
@@ -21,9 +23,19 @@ namespace Agenda_Web.Controllers
         }
 
         // GET: LogErrors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string application="", string level="", int? pageNumber = null)
         {
-            return View(await _context.LogErrors.ToListAsync());
+            var logList = _context.LogErrors
+                        .Where (le => (le.Application.Contains(application)||application=="")
+                                    && (level == "" || le.LogLevel.Contains(level)))
+                        .OrderBy(le => le.TimeStamp);
+            if (pageNumber == null) {pageNumber = 1;}
+
+            PageList<LogError> model = await PageList<LogError>.CreateAsync(logList, pageNumber.Value, 10);
+
+            ViewData["level"] = level;
+            ViewData["application"] = application;
+            return View(model);
         }
 
         // GET: LogErrors/Details/5
@@ -40,7 +52,6 @@ namespace Agenda_Web.Controllers
             {
                 return NotFound();
             }
-
             return View(logError);
         }
 

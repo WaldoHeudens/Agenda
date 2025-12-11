@@ -138,4 +138,10 @@
   <data name="Lijst" xml:space="preserve">
     <value>Overzicht</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Volgende</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Vorige</value>
+  </data>
 </root>
