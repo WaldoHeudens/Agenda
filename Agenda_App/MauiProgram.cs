@@ -18,9 +18,6 @@ namespace Agenda_App
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // Registreren van de dbContext als service
-            builder.Services.AddDbContext<LocalDbContext>();
-
             // Configureer logging via de API naar de databank
             builder.Logging.AddDbLogger(options =>
                 {

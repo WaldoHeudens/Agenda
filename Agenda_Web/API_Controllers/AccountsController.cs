@@ -21,16 +21,16 @@ namespace Agenda_Web.API_Controllers
         // Post: api/IsAuthorized
         [HttpGet]
         [Route("/api/isauthorized")]
-        public async Task<string> IsAuthorized()
+        public async Task<AgendaUser> IsAuthorized()
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
                 // Als aangemeld, zend de user-Id terug
-                return _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+                return _context.Users.First(u => u.UserName == User.Identity.Name);
             }
             else
             {
-                return "-";
+                return AgendaUser.dummy;
             }
         }
 
@@ -38,17 +38,17 @@ namespace Agenda_Web.API_Controllers
         // POST: api/LogIn
         [HttpPost]
         [Route("/api/Login")]
-        public async Task<string> LogIn([FromBody] LoginModel model)
+        public async Task<AgendaUser> LogIn([FromBody] LoginModel model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 // Als aangemeld, zend de user-Id terug
-                return _context.Users.First(u => u.UserName == User.Identity.Name).Id;
+                return _context.Users.First(u => u.UserName == User.Identity.Name);
             }
             else
             {
-                return "-";
+                return AgendaUser.dummy;
             }
         }
     }

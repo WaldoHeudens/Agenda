@@ -96,12 +96,12 @@ namespace Agenda_Models
 
     public class LocalAppointment : Appointment
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)] // Geen automatische generatie van de primary key
         public new long Id { get; set; } // Override de Id om een eigen primary key te kunnen definiëren
 
         [ForeignKey("AppointmentType")]
         public new int AppointmentTypeId { get; set; } // Override de AppointmentTypeId om te werken met LocalAppointmentType
         public new LocalAppointmentType? AppointmentType { get; set; } // Override de AppointmentType om te werken met LocalAppointmentType
+
     }
 }

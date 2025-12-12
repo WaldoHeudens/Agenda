@@ -65,9 +65,10 @@ namespace Agenda_Models
 
     public class  LocalAppointmentType:AppointmentType
     {
-        // Deze klasse is nodig om een eigen primary key te kunnen definiëren voor lokale opslag
+        // Deze klasse is nodig om lokale opslag te synchroniseren 
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public new int Id { get; set; }
+        public new int Id { get; set; }     // Definieer een nieuwe Id die niet door de databank wordt toegekend
+
     }
 }

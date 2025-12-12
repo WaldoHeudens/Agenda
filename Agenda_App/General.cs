@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Agenda_Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace Agenda_App
         //internal static readonly string ApiUrl = "https://960xxt9s-5128.euw.devtunnels.ms/api/"; // Werkt voor Android emulator met devtunnel
 
         // De UserId van de aangemelde gebruiker.  Wordt verkregen bij de aanmelding bij de API
+        internal static AgendaUser User = null;
         internal static string UserId = "";
 
         // De teller voor het veilig maken van een lokale ID voor nieuwe items (altijd negatief)

@@ -19,33 +19,67 @@
         <CollectionView Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Appointments}">
             <CollectionView.ItemTemplate>
                 <DataTemplate  x:DataType="models:Appointment">
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems SwipeBehaviorOnInvoked="Close">
-                                <!--Voorbeeld van toevoeging van een eventhandler-->
-                                <SwipeItem Text="Bewerk" 
-                                           BackgroundColor="LightGreen" 
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},
-                                                             Path=BewerkCommand}"
-                                           CommandParameter="{Binding .}"/>
-                                <!--Invoked="Bewerkt_Invoked"/>--> 
-                                <!--Voorbeeld van puur MVVM, waarbij de bindingcontext een App_Appointment is-->
-                                <SwipeItem Text="Verwijder" 
-                                           BackgroundColor="Red" 
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},
-                                                             Path=VerwijderCommand}"
-                                           CommandParameter="{Binding .}"/> 
-                            </SwipeItems>
-                        </SwipeView.RightItems>
+                    <Grid>
+                        <SwipeView>
+                            <SwipeView.IsVisible>
+                                <OnIdiom x:TypeArguments="x:Boolean">
+                                    <OnIdiom.Phone>True</OnIdiom.Phone>
+                                    <OnIdiom.Tablet>False</OnIdiom.Tablet>
+                                    <OnIdiom.Desktop>False</OnIdiom.Desktop>
+                                </OnIdiom>
+                            </SwipeView.IsVisible>
+                            <SwipeView.RightItems>
+                                <SwipeItems SwipeBehaviorOnInvoked="Close">
+                                    <!--Voorbeeld van toevoeging van een eventhandler-->
+                                    <SwipeItem Text="Bewerk" 
+                                               BackgroundColor="LightGreen" 
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},
+                                                                 Path=BewerkCommand}"
+                                               CommandParameter="{Binding .}"/>
+                                    <!--Invoked="Bewerkt_Invoked"/>--> 
+                                    <!--Voorbeeld van puur MVVM, waarbij de bindingcontext een App_Appointment is-->
+                                    <SwipeItem Text="Verwijder" 
+                                               BackgroundColor="Red" 
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},
+                                                                 Path=VerwijderCommand}"
+                                               CommandParameter="{Binding .}"/> 
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <StackLayout Orientation="Horizontal" HeightRequest="50" Padding="0,2">
+                                <Border VerticalOptions="Center">
+                                    <Label Text="{Binding From}" Margin="10" FontSize="18"/>
+                                </Border>
+                                <Border VerticalOptions="Center">
+                                    <Label Text="{Binding Title}" Margin="10" FontSize="18"/>
+                                </Border>
+                            </StackLayout>
+                        </SwipeView>
                         <StackLayout Orientation="Horizontal" HeightRequest="50" Padding="0,2">
+                            <StackLayout.IsVisible>
+                                <OnIdiom x:TypeArguments="x:Boolean">
+                                    <OnIdiom.Phone>False</OnIdiom.Phone>
+                                    <OnIdiom.Tablet>True</OnIdiom.Tablet>
+                                    <OnIdiom.Desktop>True</OnIdiom.Desktop>
+                                </OnIdiom>
+                            </StackLayout.IsVisible>
                             <Border VerticalOptions="Center">
                                 <Label Text="{Binding From}" Margin="10" FontSize="18"/>
                             </Border>
                             <Border VerticalOptions="Center">
                                 <Label Text="{Binding Title}" Margin="10" FontSize="18"/>
                             </Border>
+                            <Button Text="Bewerk" 
+                                               BackgroundColor="LightGreen" 
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},
+                                                                 Path=BewerkCommand}"
+                                               CommandParameter="{Binding .}"/>
+                            <Button Text="Verwijder" 
+                                               BackgroundColor="Red" 
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},
+                                                                 Path=VerwijderCommand}"
+                                               CommandParameter="{Binding .}"/>
                         </StackLayout>
-                    </SwipeView>
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

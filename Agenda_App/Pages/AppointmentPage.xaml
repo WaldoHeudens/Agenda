@@ -13,13 +13,10 @@
         <Entry Placeholder="Wat?" Text="{Binding Title}"/>
         <Entry Placeholder="Omschrijving?" Text="{Binding Description}"/>
         <Entry Placeholder="Hele dag?" Text="{Binding AllDay}"/>
-        <SelectableItemsView ItemsSource="{Binding LocalAppointmentTypes}" SelectedItem="{Binding SelectedAppointmentType}">
-            <SelectableItemsView.ItemTemplate>
-                <DataTemplate x:DataType="models:LocalAppointmentType">
-                    <Label Text="{Binding Name}"/>
-                </DataTemplate>
-            </SelectableItemsView.ItemTemplate>
-        </SelectableItemsView>
+        <Picker ItemsSource="{Binding AppointmentTypes}" 
+                ItemDisplayBinding="{Binding Name}" 
+                SelectedItem="{Binding SelectedAppointmentType}">
+        </Picker>
         <Button Text="Bewaren" Command="{Binding SaveCommand}"/>
     </VerticalStackLayout>
     

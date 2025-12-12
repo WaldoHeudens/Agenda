@@ -21,7 +21,6 @@ namespace Agenda_App
             _context = context;
 
             client = new HttpClient();
-            client = new HttpClient();
             sOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -51,11 +50,11 @@ namespace Agenda_App
 
                     //response.EnsureSuccessStatusCode();
                     string responseBody = response.Content.ReadAsStringAsync().Result;
-                    List<AppointmentType> types = JsonSerializer.Deserialize<List<AppointmentType>>(responseBody, sOptions);
+                    List<LocalAppointmentType> types = JsonSerializer.Deserialize<List<LocalAppointmentType>>(responseBody, sOptions);
                     if (types != null && types.Count > 0)
                     {
                         // Zet alle bestaande types op "deleted"
-                        foreach (AppointmentType type in _context.AppointmentTypes)
+                        foreach (LocalAppointmentType type in _context.AppointmentTypes)
                         {
                             type.Deleted = DateTime.Now;
                             _context.Update(type);
@@ -63,9 +62,9 @@ namespace Agenda_App
                         await _context.SaveChangesAsync();
 
                         // Pas nu de opgehaalde lijst toe
-                        foreach (AppointmentType type in types)
+                        foreach (LocalAppointmentType type in types)
                         {
-                            AppointmentType existingType = null;
+                            LocalAppointmentType existingType = null;
                             try
                             { 
                                 // Bestaand type, dus bijwerken
@@ -74,6 +73,7 @@ namespace Agenda_App
                                 existingType.Description = type.Description;
                                 existingType.Color = type.Color;
                                 existingType.Deleted = type.Deleted;  // Niet verwijderd
+                                existingType.UserId = type.UserId;
                                 _context.Update(existingType);
                             }
                             catch  // Nieuw type, dus toevoegen
@@ -105,13 +105,14 @@ namespace Agenda_App
                 HttpResponseMessage response = await client.GetAsync(uri);
                 //response.EnsureSuccessStatusCode();
                 string responseBody = response.Content.ReadAsStringAsync().Result;
-                General.UserId = JsonSerializer.Deserialize<string>(responseBody, sOptions);
+                General.User = JsonSerializer.Deserialize<AgendaUser>(responseBody, sOptions);
+                General.UserId = General.User.Id;
                 return General.UserId.Length > 10;  // Hebben we een userId teruggekregen of niet?
             }
             catch (Exception)
             {
                 // Zet een waarde in UserId om te tonen dat we geprobeerd hebben om aan te melden
-                General.UserId = "-";  
+                General.UserId = AgendaUser.dummy.Id; 
                 return false;
             }
         }
@@ -124,18 +125,19 @@ namespace Agenda_App
             // await _context.Database.EnsureDeletedAsync();
 
             // Zorg ervoor dat de database is aangemaakt en de laatste migraties zijn toegepast
-            _context.Database.MigrateAsync();
 
+            _context.Database.Migrate();
 
             // Zolang er nog geen synchronisatie is geweest, voeg een basis AppointmentType toe
-            if (!_context.AppointmentTypes.Any())
+            if (_context.AppointmentTypes.Count()==0)
             {
-                Language nederlands = new Language { Code = "nl", Name = "Nederlands" };
-                _context.Languages.Add(nederlands);
-                AgendaUser user = new AgendaUser { UserName = "LocalUser", Email = "(local)", FirstName = "Local", LastName = "User", Language = nederlands };
+                _context.Languages.Add(new Language { Code = "en", Name = "English"});
+                _context.Languages.Add(new Language { Code = "fr", Name = "français" });
+                _context.Languages.Add(new Language { Code = "nl", Name = "Nederlands" });
+                AgendaUser user = new AgendaUser { UserName = "-", Email = "(local)", FirstName = "Local", LastName = "User", LanguageCode = "nl" };
                 _context.Users.Add(user);
                 _context.SaveChanges();
-                _context.AppointmentTypes.Add(new Agenda_Models.LocalAppointmentType { Name = "?", User = user });
+                _context.AppointmentTypes.Add(new Agenda_Models.LocalAppointmentType { Name = "?", UserId = user.Id });
                 _context.SaveChanges();
             }
 
@@ -160,7 +162,7 @@ namespace Agenda_App
             try
             {
                 // Verwijder oude logingegevens
-                var oldLogins = _context.Logins.Where(l => l.Username == loginModel.Username);
+                var oldLogins = _context.Logins.Where(l => l.Username == loginModel.Username).ToList();
                 _context.Logins.RemoveRange(oldLogins);
                 _context.SaveChanges();
 
@@ -171,22 +173,37 @@ namespace Agenda_App
                 // Verstuur de login-aanvraag naar de API en verwerk de response
                 HttpResponseMessage response = await client.PostAsync(uri, content);
                 string responseBody = response.Content.ReadAsStringAsync().Result;
-                // General.UserId = JsonSerializer.Deserialize<string>(responseBody, sOptions);
-                General.UserId = responseBody.Trim('"');  // Verwijder aanhalingstekens uit de string
+                General.User = JsonSerializer.Deserialize<AgendaUser>(responseBody, sOptions);
+                General.UserId = General.User.Id;
+
+                AgendaUser user = _context.Users.FirstOrDefault(u => u.Id == General.UserId);
+                _context.Users.Remove(user);
+                _context.SaveChanges();
                 
                 if (General.UserId.Length > 10)  // Geldig UserId is teruggekomen
                 {
+                    try
+                    {
+                        _context.Users.Add(General.User);
+                        _context.SaveChanges();
+                    }
+                    catch (Exception e) { }   // niets nodig:  Bestaat al
                     loginModel.ValidTill = DateTime.Now + TimeSpan.FromHours(1);
-                    _context.Add(loginModel);
+                    _context.Logins.Add(loginModel);
                     _context.SaveChanges();
                     return true;
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                // Geen aanmelding, dus geen geldig UserId
-                General.UserId = "-";
+                if (General.UserId.Length > 10)
+                        // een gebruiker bestaat toch !
+                        { _context.Update(loginModel);
+                _context.SaveChanges();}
+                else
+                    // Geen aanmelding, dus geen geldig UserId
+                    General.UserId = AgendaUser.dummy.Id;
             }
             return false;
         }

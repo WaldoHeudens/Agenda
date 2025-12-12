@@ -42,9 +42,9 @@ namespace Agenda_App.ViewModels
                 app.To = DateTime.Parse(Wanneer).AddHours(1);
                 app.Created = DateTime.Now;
                 app.AppointmentType = _context.AppointmentTypes.First(); // Standaard type
+                app.UserId = General.UserId;
                 Wat = string.Empty;
                 Wanneer = string.Empty;
-                app.User = _context.Users.First(); // Standaard gebruiker
                 _context.Appointments.Add(app);
                 _context.SaveChanges();
                 appointments.Add(app);

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Agenda_Models.Migrations
 {
     /// <inheritdoc />
-    public partial class Local_Initializing : Migration
+    public partial class Local_Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

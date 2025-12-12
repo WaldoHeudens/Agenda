@@ -58,6 +58,7 @@ namespace Agenda_App.ViewModels
             appointment.From = From;
             appointment.To = To;
             appointment.AllDay = AllDay;
+            appointment.UserId = General.UserId;
             _context.Appointments.Update(appointment);
             await _context.SaveChangesAsync();
             Application.Current.MainPage.Navigation.PopAsync();

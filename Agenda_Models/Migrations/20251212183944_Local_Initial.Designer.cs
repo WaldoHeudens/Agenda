@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agenda_Models.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    [Migration("20251210183940_Local_Initializing")]
-    partial class Local_Initializing
+    [Migration("20251212183944_Local_Initial")]
+    partial class Local_Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
