@@ -13,7 +13,7 @@ namespace Agenda_App.ViewModels
     public partial class AppointmentViewModel : ObservableObject
     {
         readonly LocalDbContext _context;
-        public AppointmentViewModel(Appointment appointment, LocalDbContext context)
+        public AppointmentViewModel(LocalAppointment appointment, LocalDbContext context)
         { 
             _context = context;
             this.appointment = appointment;
@@ -22,11 +22,11 @@ namespace Agenda_App.ViewModels
             From = appointment.From;
             To = appointment.To;
             AllDay = appointment.AllDay;
-            appointmentTypes = _context.LocalAppointmentTypes.ToList();
+            appointmentTypes = _context.AppointmentTypes.ToList();
         }
 
         [ObservableProperty]
-        Appointment appointment;
+        LocalAppointment appointment;
 
         [ObservableProperty]
         DateTime from;
@@ -44,10 +44,10 @@ namespace Agenda_App.ViewModels
         bool allDay;
 
         [ObservableProperty]
-        List<AppointmentType> appointmentTypes;
+        List<LocalAppointmentType> appointmentTypes;
 
         [ObservableProperty]
-        AppointmentType selectedAppointmentType;
+        LocalAppointmentType selectedAppointmentType;
 
 
         [RelayCommand]

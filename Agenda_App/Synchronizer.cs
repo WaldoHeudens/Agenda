@@ -32,7 +32,7 @@ namespace Agenda_App
         async Task AllTypes()
         {
             // Synchroniseer eerst van lokaal naar API : Nog niet geïmplementeerd !
-            foreach (AppointmentType type in _context.LocalAppointmentTypes)
+            foreach (AppointmentType type in _context.AppointmentTypes)
             {
                 if (type.Deleted == General.Dirty)  // Aangepast of nieuw type
                 {
@@ -54,7 +54,7 @@ namespace Agenda_App
                     if (types != null && types.Count > 0)
                     {
                         // Zet alle bestaande types op "deleted"
-                        foreach (AppointmentType type in _context.LocalAppointmentTypes)
+                        foreach (AppointmentType type in _context.AppointmentTypes)
                         {
                             type.Deleted = DateTime.Now;
                             _context.Update(type);
@@ -68,7 +68,7 @@ namespace Agenda_App
                             try
                             { 
                                 // Bestaand type, dus bijwerken
-                                existingType = _context.LocalAppointmentTypes.Where(t => t.Id == type.Id).First();
+                                existingType = _context.AppointmentTypes.Where(t => t.Id == type.Id).First();
                                 existingType.Name = type.Name;
                                 existingType.Description = type.Description;
                                 existingType.Color = type.Color;
@@ -122,14 +122,14 @@ namespace Agenda_App
 
 
             // Zolang er nog geen synchronisatie is geweest, voeg een basis AppointmentType toe
-            if (!_context.LocalAppointmentTypes.Any())
+            if (!_context.AppointmentTypes.Any())
             {
                 Language nederlands = new Language { Code = "nl", Name = "Nederlands" };
                 _context.Languages.Add(nederlands);
                 AgendaUser user = new AgendaUser { UserName = "LocalUser", Email = "(local)", FirstName = "Local", LastName = "User", Language = nederlands };
                 _context.Users.Add(user);
                 _context.SaveChanges();
-                _context.LocalAppointmentTypes.Add(new Agenda_Models.AppointmentType { Name = "?", User = user });
+                _context.AppointmentTypes.Add(new Agenda_Models.LocalAppointmentType { Name = "?", User = user });
                 _context.SaveChanges();
             }
             dbExists = true;

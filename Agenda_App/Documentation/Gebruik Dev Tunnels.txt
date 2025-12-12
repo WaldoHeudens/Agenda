@@ -1,0 +1,42 @@
+﻿Opzetten van een Dev Tunnel voor de Agenda App
+==============================================
+
+
+Voor meer informatie:  https://learn.microsoft.com/en-us/azure/developer/dev-tunnels/get-started?tabs=windows
+of https://www.youtube.com/watch?v=azuC8SFHWp8
+
+
+Open je command line interface ("Command Prompt" in PowerShell modus, of "PowerShell").
+Voer  volgende stappen uit om een Dev Tunnel op te zetten voor de Agenda App:
+
+1. Installeer de Dev Tunnels CLI als je deze nog niet hebt geïnstalleerd:
+	winget install Microsoft.devtunnel
+   of
+	Invoke-WebRequest -Uri https://aka.ms/TunnelsCliDownload/win-x64 -OutFile devtunnel.exe .\devtunnel.exe -h
+   
+   en herstart je PowerShell sessie.
+
+2. Login met je Microsoft/Azure/GitHub account:
+	devtunnel user login
+
+3. Start hosting een devtunnel	
+	devtunnel host -p 5128 (5128 als dat het http-adres is van je webapplicatie)
+
+	Je krijgt dan een resultaat gelijkaardig aan dit:
+	
+	C:\Users\waldo.heudens>devtunnel host -p 5128
+	Hosting port: 5128
+	Connect via browser: https://vmb498mc-5128.euw.devtunnels.ms
+	Inspect network activity: https://vmb498mc-5128-inspect.euw.devtunnels.ms
+	Ready to accept connections for tunnel: peaceful-river-gj03wkd.euw
+
+4.  Run je web-applicatie met het juiste localhost http-poortnummer (niet https!), in ons geval 5128
+
+5	Connecteer je browser met de Dev Tunnel URL die je in stap 3 kreeg.  (hier: https://vmb498mc-5128.euw.devtunnels.ms )
+	en meld je aan met hetzelfde account als in stap 2.  Bevestig een eventuele beveiligingsmelding.
+
+5.  Je kan nu de website (en api's) bereiken met deze Url, die je ook kan gebruiken in je Android app
+	Opmerking:  Je kan testen in je browser, maar ook de netwerkactiviteit opvolgen via de "Inspect netwerk activity"- url in stap 3.
+
+
+Je zal telkens opnieuw een devtunnel moeten aanmaken, en eventueel de juiste url aanpassen.
