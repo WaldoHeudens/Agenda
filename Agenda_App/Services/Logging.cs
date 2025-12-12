@@ -94,7 +94,6 @@ namespace Agenda_App.Services
                 };
 
                 // Zendt de loggegevens door via de API (Hopelijk is die ter beschikking)
-                
                 // Maak de content voor de (post) LogError-verzending
             
                 JsonSerializerOptions sOptions = new JsonSerializerOptions

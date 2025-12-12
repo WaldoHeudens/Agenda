@@ -28,7 +28,7 @@ namespace Agenda_Web.Controllers
             var logList = _context.LogErrors
                         .Where (le => (le.Application.Contains(application)||application=="")
                                     && (level == "" || le.LogLevel.Contains(level)))
-                        .OrderBy(le => le.TimeStamp);
+                        .OrderByDescending(le => le.TimeStamp);
             if (pageNumber == null) {pageNumber = 1;}
 
             PageList<LogError> model = await PageList<LogError>.CreateAsync(logList, pageNumber.Value, 10);

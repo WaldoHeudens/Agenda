@@ -21,6 +21,7 @@ namespace Agenda_App
             _context = context;
 
             client = new HttpClient();
+            client = new HttpClient();
             sOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -34,7 +35,7 @@ namespace Agenda_App
             // Synchroniseer eerst van lokaal naar API : Nog niet geïmplementeerd !
             foreach (AppointmentType type in _context.AppointmentTypes)
             {
-                if (type.Deleted == General.Dirty)  // Aangepast of nieuw type
+                if (type.Id < 0)  // Aangepast of nieuw type
                 {
                 }
             }
@@ -117,6 +118,11 @@ namespace Agenda_App
 
         internal async Task InitializeDb()
         {
+            // Verwijder eenmalig de database om problemen met migraties te vermijden
+            //     Gebruik volgende regel als er geen "dirty" records verzonden moeten worden, maar er
+            //     wel incompatibiliteitsproblemen met de locale database zijn.
+            // await _context.Database.EnsureDeletedAsync();
+
             // Zorg ervoor dat de database is aangemaakt en de laatste migraties zijn toegepast
             _context.Database.MigrateAsync();
 
@@ -132,6 +138,18 @@ namespace Agenda_App
                 _context.AppointmentTypes.Add(new Agenda_Models.LocalAppointmentType { Name = "?", User = user });
                 _context.SaveChanges();
             }
+
+            // Set de teller voor lokale ID's terug naar de laagste actuele waarde om 
+            // ondubbelzinnige ID's te garanderen
+            General.LocalIdCounter = (_context.Appointments.Any()) ?
+                _context.Appointments.Min(a => a.Id) :
+                1;
+            long even = Math.Min( (_context.AppointmentTypes.Any()) ?
+                                    _context.AppointmentTypes.Min(t => t.Id) : -1,
+                                  -1);
+            // Zet de teller onder de laagste waarde
+            General.LocalIdCounter = Math.Min(General.LocalIdCounter, even ) - 1;
+
             dbExists = true;
         }
 

@@ -58,7 +58,6 @@ namespace Agenda_App.ViewModels
             appointment.From = From;
             appointment.To = To;
             appointment.AllDay = AllDay;
-            appointment.Deleted = General.Dirty; // Mark as dirty for synchronization
             _context.Appointments.Update(appointment);
             await _context.SaveChangesAsync();
             Application.Current.MainPage.Navigation.PopAsync();

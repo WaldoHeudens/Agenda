@@ -36,12 +36,12 @@ namespace Agenda_App.ViewModels
             {
                 // Voeg een nieuwe afspraak toe met (voorlopige?) vaste waarden
                 LocalAppointment app = new LocalAppointment();
+                app.Id = General.LocalIdCounter--;  // een unieke negatieve ("dirty"!) Id
                 app.Title = Wat;
                 app.From = DateTime.Parse(Wanneer);
                 app.To = DateTime.Parse(Wanneer).AddHours(1);
                 app.Created = DateTime.Now;
                 app.AppointmentType = _context.AppointmentTypes.First(); // Standaard type
-                app.Deleted = General.Dirty;  // Nog niet gesynchroniseerd
                 Wat = string.Empty;
                 Wanneer = string.Empty;
                 app.User = _context.Users.First(); // Standaard gebruiker
@@ -49,7 +49,7 @@ namespace Agenda_App.ViewModels
                 _context.SaveChanges();
                 appointments.Add(app);
             }
-            catch (Exception ex)
+            catch 
             {
                 // Handle parsing error (e.g., show a message to the user)
             }
@@ -73,6 +73,5 @@ namespace Agenda_App.ViewModels
             await Application.Current.MainPage.Navigation.PushAsync(new AppointmentPage(new AppointmentViewModel(appointment, _context), _context));
             Appointments = [.. _context.Appointments.Where(a => a.Deleted > DateTime.Now)];
         }
-
     }
 }

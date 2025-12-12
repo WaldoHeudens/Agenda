@@ -1,4 +1,5 @@
 ﻿using Agenda_App.Pages;
+using Agenda_App.Services;
 using Agenda_Models;
 using Microsoft.Extensions.Logging;
 
@@ -16,6 +17,17 @@ namespace Agenda_App
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            // Registreren van de dbContext als service
+            builder.Services.AddDbContext<LocalDbContext>();
+
+            // Configureer logging via de API naar de databank
+            builder.Logging.AddDbLogger(options =>
+                {
+                    builder.Configuration
+                        .GetSection("Logging");
+                }
+            );
 
             // Registreren van de dbContext als service
             builder.Services.AddDbContext<LocalDbContext>();
